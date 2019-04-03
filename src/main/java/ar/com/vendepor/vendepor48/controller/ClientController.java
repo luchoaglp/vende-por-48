@@ -38,11 +38,6 @@ public class ClientController {
         this.signUpTokenService = signUpTokenService;
     }
 
-    @GetMapping({ "", "/home"})
-    public String home() {
-        return "home";
-    }
-
     @GetMapping("/signin")
     public String signin() {
         return "signin";

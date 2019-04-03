@@ -2,11 +2,15 @@ package ar.com.vendepor.vendepor48.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "clients")
@@ -21,6 +25,15 @@ public class Client extends User {
     @NotBlank(message = "{lastName.notblank}")
     @Size(min = 2, max = 50, message =  "{lastName.size}")
     private String lastName;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    private List<Publication> publications = new ArrayList<>();
+
+    public Client addPublication(Publication publication) {
+        publication.setClient(this);
+        this.publications.add(publication);
+        return this;
+    }
 
     public Client() {
         this.createdDate = new Date();
@@ -40,6 +53,14 @@ public class Client extends User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Publication> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(List<Publication> publications) {
+        this.publications = publications;
     }
 
     @Override
