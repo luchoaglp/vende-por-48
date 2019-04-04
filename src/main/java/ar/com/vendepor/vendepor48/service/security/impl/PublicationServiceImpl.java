@@ -17,6 +17,11 @@ public class PublicationServiceImpl implements PublicationService {
         this.publicationRepository = publicationRepository;
     }
 
+    @Override
+    public Publication findById(Long id) {
+        return publicationRepository.findById(id).orElse(null);
+    }
+
     public List<Publication> findAll() {
         List<Publication> publications = new ArrayList<>();
         publicationRepository.findAll()
