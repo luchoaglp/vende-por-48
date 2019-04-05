@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,6 +68,17 @@ public class ClientController {
             return "signup";
         }
 
+        if(clientService.existsByEmail(signUpClient.getEmail())) {
+
+            result.addError(new FieldError(
+                    "signUpClient",
+                    "email",
+                    "El email ya se encuentra registrado"
+            ));
+
+            return "signup";
+        }
+
         String token = UUID.randomUUID().toString();
 
         signUpClient.setEmail(signUpClient.getEmail().trim());
@@ -102,12 +114,11 @@ public class ClientController {
 
         SignUpToken signUpToken = signUpTokenService.findByToken(token);
 
-        if(signUpToken == null) {
-            throw new SignUpTokenException("Token inválido");
-        }
-
         if(signUpToken.isTokenExpired()) {
             throw new SignUpTokenException("El token ha expirado");
+        }
+        if(signUpToken == null) {
+            throw new SignUpTokenException("Token inválido");
         }
 
         model.addAttribute("signUpToken", signUpToken);
@@ -121,28 +132,44 @@ public class ClientController {
                            @ModelAttribute("token") String token,
                            @Valid RegisterClient registerClient,
                            BindingResult result,
-                           HttpServletRequest request) {
-
-        if(result.hasErrors()) {
-            return "signup";
-        }
+                           Model model) {
 
         SignUpToken signUpToken = signUpTokenService.findById(tokenId);
 
+        if(result.hasErrors()) {
+
+            model.addAttribute("signUpToken", signUpToken);
+
+            return "register";
+        }
+
+        if(clientService.existsByUsername(registerClient.getUsername())) {
+
+            model.addAttribute("signUpToken", signUpToken);
+
+            result.addError(new FieldError(
+                    "registerClient",
+                    "username",
+                    "El usuario ya se encuentra registrado"
+            ));
+
+            return "register";
+        }
+
+        if(signUpToken.isTokenExpired()) {
+            throw new SignUpTokenException("El token ha expirado");
+        }
         if(signUpToken == null) {
             throw new SignUpTokenException("Token inválido");
         }
-
         if(!signUpToken.getToken().equals(token)) {
             throw new SignUpTokenException("Token inválido");
-        }
-        if(signUpToken.isTokenExpired()) {
-            throw new SignUpTokenException("El token ha expirado");
         }
 
         Client client = new Client();
         client.setEmail(signUpToken.getSignUpClient().getEmail());
         client.setPassword(signUpToken.getSignUpClient().getPassword());
+        client.setUsername(registerClient.getUsername());
         client.setFirstName(registerClient.getFirstName().trim());
         client.setLastName(registerClient.getLastName().trim());
 

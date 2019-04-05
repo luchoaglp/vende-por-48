@@ -47,6 +47,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         client.setEmail(signUpTokenSaved.getSignUpClient().getEmail());
         client.setPassword(signUpTokenSaved.getSignUpClient().getPassword());
+        client.setUsername("username");
         client.setFirstName("fName");
         client.setLastName("lName");
 

@@ -1,6 +1,7 @@
 package ar.com.vendepor.vendepor48.domain.security;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 public class SignUpClient {
 
@@ -32,8 +34,6 @@ public class SignUpClient {
 
     @OneToOne
     private SignUpToken signUpToken;
-
-    public SignUpClient() { }
 
     public SignUpClient(String email, String password) {
         this.email = email;

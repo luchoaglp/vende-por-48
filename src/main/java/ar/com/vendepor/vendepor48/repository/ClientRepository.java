@@ -9,4 +9,7 @@ public interface ClientRepository extends UserRepository<Client> {
     @Override
     Optional<Client> findByEmail(String email);
 
+    @Override
+    Optional<Client> findByUsernameOrEmail(String username, String email);
+
 }

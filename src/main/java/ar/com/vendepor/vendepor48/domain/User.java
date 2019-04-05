@@ -3,8 +3,8 @@ package ar.com.vendepor.vendepor48.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,19 +18,19 @@ import java.util.Date;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    /*
     @NotNull
     @NotBlank(message = "{username.notblank}")
     @Size(min = 6, max = 15)
+    @Column(unique = true)
     protected String username;
-    */
 
     @NotNull
     @NotBlank
@@ -54,8 +54,6 @@ public abstract class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT-03:00")
     @LastModifiedDate
     protected Date lastModifiedDate;
-
-    public User() { }
 
     public User(String email, String password) {
         this.email = email;

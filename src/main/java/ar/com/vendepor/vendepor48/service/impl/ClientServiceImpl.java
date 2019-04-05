@@ -15,6 +15,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public boolean existsByUsername(String username) {
+        return clientRepository.existsByUsername(username);
+    }
+
+    @Override
     public boolean existsByEmail(String email) {
         return clientRepository.existsByEmail(email);
     }
