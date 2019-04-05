@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,10 +24,20 @@ public class Publication {
     @Lob
     private String description;
     private Double amount;
-    private LocalDateTime startDate;
+    private LocalDateTime startDateTime;
 
     @ManyToOne
     private Client client;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "publication")
+    @OrderBy("id DESC")
+    private List<PublicationMessage> messages = new ArrayList<>();
+
+    public Publication addPublicationMessage(PublicationMessage message) {
+        message.setPublication(this);
+        this.messages.add(message);
+        return this;
+    }
 
     public String shortDescription() {
         return description.substring(0, 90);

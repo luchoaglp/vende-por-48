@@ -5,6 +5,8 @@ import ar.com.vendepor.vendepor48.repository.ClientRepository;
 import ar.com.vendepor.vendepor48.service.ClientService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientServiceImpl implements ClientService {
 
@@ -27,6 +29,11 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client save(Client client) {
         return clientRepository.save(client);
+    }
+
+    @Override
+    public void saveAll(List<Client> clients) {
+        clientRepository.saveAll(clients);
     }
 
 }

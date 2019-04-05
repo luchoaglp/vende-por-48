@@ -58,8 +58,7 @@ public class UserPrincipal implements UserDetails {
             return new UserPrincipal(
                     client.getId(),
                     client.getFirstName() + " " + client.getLastName(),
-                    //client.getUsername(),
-                    client.getEmail(),
+                    client.getUsername(),
                     client.getEmail(),
                     client.getPassword(),
                     authorities

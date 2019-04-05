@@ -2,6 +2,7 @@ package ar.com.vendepor.vendepor48.bootstrap;
 
 import ar.com.vendepor.vendepor48.domain.Client;
 import ar.com.vendepor.vendepor48.domain.Publication;
+import ar.com.vendepor.vendepor48.domain.PublicationMessage;
 import ar.com.vendepor.vendepor48.domain.security.SignUpClient;
 import ar.com.vendepor.vendepor48.domain.security.SignUpToken;
 import ar.com.vendepor.vendepor48.service.ClientService;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -33,7 +36,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
         String token = UUID.randomUUID().toString();
 
         SignUpClient signUpClient = new SignUpClient(
-                "test@email.com",
+                "cliente1@email.com",
                 passwordEncoder.encode("123456"));
 
         SignUpToken signUpToken = new SignUpToken(token);
@@ -43,19 +46,42 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         SignUpToken signUpTokenSaved = signUpTokenService.findById(signUpToken.getId());
 
-        Client client = new Client();
+        List<Client> clients = new ArrayList<>();
 
-        client.setEmail(signUpTokenSaved.getSignUpClient().getEmail());
-        client.setPassword(signUpTokenSaved.getSignUpClient().getPassword());
-        client.setUsername("username");
-        client.setFirstName("fName");
-        client.setLastName("lName");
+        clients.add(getClient1(signUpTokenSaved));
+        clients.add(getClient2());
 
-        client.addPublication(getPublication1());
-        client.addPublication(getPublication2());
-        client.addPublication(getPublication3());
+        clientService.saveAll(clients);
+    }
 
-        clientService.save(client);
+    private Client getClient1(SignUpToken signUpTokenSaved) {
+
+        Client client1 = new Client();
+
+        client1.setEmail(signUpTokenSaved.getSignUpClient().getEmail());
+        client1.setPassword(signUpTokenSaved.getSignUpClient().getPassword());
+        client1.setUsername("username1");
+        client1.setFirstName("fName1");
+        client1.setLastName("lName1");
+
+        client1.addPublication(getPublication1());
+        client1.addPublication(getPublication2());
+        client1.addPublication(getPublication3());
+
+        return client1;
+    }
+
+    private Client getClient2() {
+
+        Client client2 = new Client();
+
+        client2.setEmail("cliente2@email.com");
+        client2.setPassword(passwordEncoder.encode("123456"));
+        client2.setUsername("username2");
+        client2.setFirstName("fName2");
+        client2.setLastName("lName2");
+
+        return client2;
     }
 
     private Publication getPublication1() {
@@ -89,7 +115,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
                 "Con una resolución HD, ofrece efectos visuales potentes mientras te desplazas. Combinado con Dolby Audio, brinda una experiencia de entretenimiento radicalmente mejorada.");
 
         publication.setAmount(18258.9);
-        publication.setStartDate(LocalDateTime.of(2019, 04, 02, 00, 00, 00));
+        publication.setStartDateTime(LocalDateTime.of(2019, 04, 02, 00, 00, 00));
 
         return publication;
     }
@@ -133,7 +159,13 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         publication.setAmount(1699d);
 
-        publication.setStartDate(LocalDateTime.of(2019, 04, 03, 14, 20, 00));
+        publication.setStartDateTime(LocalDateTime.of(2019, 04, 03, 14, 20, 00));
+
+        PublicationMessage message1 = new PublicationMessage("Message 1", LocalDateTime.now());
+        PublicationMessage message2 = new PublicationMessage("Message 2", LocalDateTime.now());
+
+        publication.addPublicationMessage(message1);
+        publication.addPublicationMessage(message2);
 
         return publication;
     }
@@ -152,7 +184,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         publication.setAmount(6605d);
 
-        publication.setStartDate(LocalDateTime.of(2019, 05, 03, 14, 20, 00));
+        publication.setStartDateTime(LocalDateTime.of(2019, 05, 03, 14, 20, 00));
 
         return publication;
     }
