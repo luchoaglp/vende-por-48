@@ -15,11 +15,12 @@
         <div th:each="publication : ${publications}" class="col">
 
             <div class="card">
-                <img src="http://lorempixel.com/g/400/200" class="card-img-top" alt="...">
+                <img th:src="@{${'/publication/img/' + publication.id}}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${publication.title}">Card title</h5>
                     <p class="card-text" th:text="${publication.shortDescription()}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     <h2 class="card-price text-center" th:text="${'$' + #numbers.formatDecimal(publication.amount, 0, 2, 'POINT')}">$0</h2>
+                    <hr>
                     <a th:href="@{${'/publication/' + publication.id}}" class="btn btn-lg btn-block btn-primary">Ver</a>
                 </div>
             </div>

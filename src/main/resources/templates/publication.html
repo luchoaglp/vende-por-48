@@ -11,14 +11,17 @@
 
 <div class="container">
 
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <img src="http://lorempixel.com/g/1200/600" class="card-img-top" alt="...">
-                <div class="card-body">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <img th:src="@{${'/publication/img/' + publication.id}}" class="card-img-top" alt="...">
+                    <hr>
+                    <h2 class="card-price text-center" th:text="${'$' + #numbers.formatDecimal(publication.amount, 0, 2, 'POINT')}">$0</h2>
+                </div>
+                <div class="col-8">
                     <h3 class="card-title" th:text="${publication.title}">Card title</h3>
                     <p class="card-text" th:text="${publication.description}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <h2 class="card-price text-center" th:text="${'$' + #numbers.formatDecimal(publication.amount, 0, 2, 'POINT')}">$0</h2>
                 </div>
             </div>
         </div>

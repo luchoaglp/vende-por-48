@@ -65,12 +65,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     //.addLogoutHandler(customLogoutHandler())
                     .logoutSuccessUrl("/home")
-                /*.deleteCookies("remember-me").permitAll()
+                /*
+                .deleteCookies("remember-me").permitAll()
                 .and()
                 .rememberMe()
                 */;
     }
 
+    /*
     @Bean
     public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         return new CustomAuthenticationSuccessHandler();
@@ -80,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationFailureHandler customAuthenticationFailureHandler() {
         return new CustomAuthenticationFailureHandler();
     }
-
+    */
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
