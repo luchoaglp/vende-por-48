@@ -114,12 +114,7 @@ public class ClientController {
 
         SignUpToken signUpToken = signUpTokenService.findByToken(token);
 
-        if(signUpToken.isTokenExpired()) {
-            throw new SignUpTokenException("El token ha expirado");
-        }
-        if(signUpToken == null) {
-            throw new SignUpTokenException("Token inválido");
-        }
+        validateToken(signUpToken);
 
         model.addAttribute("signUpToken", signUpToken);
         model.addAttribute("registerClient", new RegisterClient());
@@ -156,12 +151,8 @@ public class ClientController {
             return "register";
         }
 
-        if(signUpToken.isTokenExpired()) {
-            throw new SignUpTokenException("El token ha expirado");
-        }
-        if(signUpToken == null) {
-            throw new SignUpTokenException("Token inválido");
-        }
+        validateToken(signUpToken);
+
         if(!signUpToken.getToken().equals(token)) {
             throw new SignUpTokenException("Token inválido");
         }
@@ -176,6 +167,15 @@ public class ClientController {
         clientService.save(client);
 
         return "signin";
+    }
+
+    private void validateToken(SignUpToken signUpToken) {
+        if(signUpToken.isTokenExpired()) {
+            throw new SignUpTokenException("El token ha expirado");
+        }
+        if(signUpToken == null) {
+            throw new SignUpTokenException("Token inválido");
+        }
     }
 
 }
