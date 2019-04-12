@@ -27,8 +27,8 @@
         </div>
     </div>
 
-    <ul class="list-group" th:each="msg : ${publication.messages}">
-        <li class="list-group-item">[<b th:text="${msg.dateTime}"></b>]: <span th:text="${msg.message}"></span></li>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="msg : ${publication.messages}">[<b th:text="${msg.dateTime}"></b>]: <span th:text="${msg.message}"></span></li>
     </ul>
 
     <footer th:replace="common/footer :: footer"/>

@@ -19,13 +19,13 @@ public class PublicationMessage {
 
     private String message;
 
-    private LocalDateTime dateTime;
+    private LocalDateTime messageDateTime;
 
     @ManyToOne
     private Publication publication;
 
-    public PublicationMessage(String message, LocalDateTime dateTime) {
+    public PublicationMessage(String message, LocalDateTime messageDateTime) {
         this.message = message;
-        this.dateTime = dateTime;
+        this.messageDateTime = messageDateTime;
     }
 }

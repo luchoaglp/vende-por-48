@@ -170,11 +170,11 @@ public class ClientController {
     }
 
     private void validateToken(SignUpToken signUpToken) {
-        if(signUpToken.isTokenExpired()) {
-            throw new SignUpTokenException("El token ha expirado");
-        }
         if(signUpToken == null) {
             throw new SignUpTokenException("Token inválido");
+        }
+        if(signUpToken.isTokenExpired()) {
+            throw new SignUpTokenException("El token ha expirado");
         }
     }
 

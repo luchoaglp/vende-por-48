@@ -1,8 +1,7 @@
 package ar.com.vendepor.vendepor48.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,13 +9,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@Builder
 @Table(name = "clients")
 public class Client extends User {
 
@@ -34,7 +35,7 @@ public class Client extends User {
     private List<Publication> publications = new ArrayList<>();
 
     public Client() {
-        this.createdDate = new Date();
+        this.createdDate = LocalDateTime.now();
     }
 
     public Client addPublication(Publication publication) {

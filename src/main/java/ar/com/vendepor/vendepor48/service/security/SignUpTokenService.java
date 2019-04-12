@@ -7,5 +7,5 @@ public interface SignUpTokenService {
 
     SignUpToken findById(Long id);
     SignUpToken findByToken(String token);
-    void save(SignUpToken signUpToken);
+    SignUpToken save(SignUpToken signUpToken);
 }

@@ -20,8 +20,8 @@ public class SignUpTokenServiceImpl implements SignUpTokenService {
     }
 
     @Override
-    public void save(SignUpToken signUpToken) {
-        signUpTokenRepository.save(signUpToken);
+    public SignUpToken save(SignUpToken signUpToken) {
+        return signUpTokenRepository.save(signUpToken);
     }
 
     @Override

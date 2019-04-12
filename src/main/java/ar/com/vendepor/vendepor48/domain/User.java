@@ -14,7 +14,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -48,17 +48,17 @@ public abstract class User {
     @JsonProperty("created_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT-03:00")
     @CreatedDate
-    protected Date createdDate;
+    protected LocalDateTime createdDate;
 
     @JsonProperty("last_modified_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT-03:00")
     @LastModifiedDate
-    protected Date lastModifiedDate;
+    protected LocalDateTime lastModifiedDate;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.createdDate = new Date();
+        this.createdDate = LocalDateTime.now();
     }
 
     @Override
