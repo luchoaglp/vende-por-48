@@ -23,7 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/", "/signin", "/signup", "/register/**",
             "/publication/detail/**",
             "/publication/img/**",
-            /*"/publication", "/publication/new", "/publication/{\\d+}/update",*/
+            "/publication/message/**", // DEV
+            "/ws/**", // DEV
             "/h2-console/**" // DEV
     };
 

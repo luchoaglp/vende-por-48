@@ -2,6 +2,7 @@ package ar.com.vendepor.vendepor48.controller;
 
 import ar.com.vendepor.vendepor48.domain.Client;
 import ar.com.vendepor.vendepor48.domain.Publication;
+import ar.com.vendepor.vendepor48.domain.PublicationMessage;
 import ar.com.vendepor.vendepor48.exception.PublicationException;
 import ar.com.vendepor.vendepor48.security.UserPrincipal;
 import ar.com.vendepor.vendepor48.service.ClientService;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
@@ -48,6 +48,7 @@ public class PublicationController {
                                     Model model) {
 
         model.addAttribute("publication", publicationService.findById(id));
+        model.addAttribute("publicationMessage", new PublicationMessage());
 
         return "publication/detail";
     }
@@ -63,7 +64,6 @@ public class PublicationController {
         }
 
         return IOUtils.toByteArray(img.getInputStream());
-
     }
 
     @GetMapping("/publication/new")
@@ -84,7 +84,7 @@ public class PublicationController {
     }
 
     @PostMapping("/publication")
-    public String saveOrUpdate(Publication publication) {
+    public String saveOrUpdatePublication(Publication publication) {
 
         UserPrincipal user = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -106,7 +106,7 @@ public class PublicationController {
 
         publication = publicationService.save(publication);
 
-        return "redirect:/publication/" + publication.getId();
+        return "redirect:/publication/detail/" + publication.getId();
     }
 
 }

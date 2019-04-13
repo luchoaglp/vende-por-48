@@ -28,4 +28,12 @@ public class PublicationMessage {
         this.message = message;
         this.messageDateTime = messageDateTime;
     }
+
+    @Override
+    public String toString() {
+        return "PublicationMessage{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
