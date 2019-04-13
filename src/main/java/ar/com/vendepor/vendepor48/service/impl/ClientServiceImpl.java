@@ -36,4 +36,9 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.saveAll(clients);
     }
 
+    @Override
+    public Client getById(Long id) {
+        return clientRepository.findById(id).orElse(null);
+    }
+
 }

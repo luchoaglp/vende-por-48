@@ -28,4 +28,9 @@ public class PublicationServiceImpl implements PublicationService {
                 .forEach(publications::add);
         return publications;
     }
+
+    @Override
+    public Publication save(Publication publication) {
+        return publicationRepository.save(publication);
+    }
 }

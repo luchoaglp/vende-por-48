@@ -11,4 +11,6 @@ public interface ClientService {
     
     Client save(Client client);
     void saveAll(List<Client> clients);
+
+    Client getById(Long id);
 }

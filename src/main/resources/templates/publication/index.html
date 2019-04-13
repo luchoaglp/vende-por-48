@@ -11,16 +11,19 @@
 <div class="container">
 
     <div class="row">
-        <div th:each="publication : ${publications}" class="col">
+        <div th:each="publication : ${publications}" class="col-4">
             <!--/*@thymesVar id="publication" type="ar.com.vendepor.vendepor48.domain.Publication"*/-->
-            <div class="card">
+            <div class="card mb-3">
                 <img th:src="@{${'/publication/img/' + publication.id}}" class="card-img-top" alt="...">
                 <div class="card-body">
+                    <a href="#" th:text="${publication.client.username}"></a>
                     <h5 class="card-title" th:text="${publication.title}">Card title</h5>
-                    <p class="card-text" th:text="${publication.shortDescription()}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     <h2 class="card-price text-center" th:text="${'$' + #numbers.formatDecimal(publication.amount, 0, 2, 'POINT')}">$0</h2>
                     <hr>
-                    <a th:href="@{${'/publication/' + publication.id}}" class="btn btn-lg btn-block btn-primary">Ver</a>
+                    <p>Empieza: <span th:text="${#temporals.format(publication.startDateTime, 'dd-MM-yyyy HH:mm')}"></span><br>
+                       Termina: <span th:text="${#temporals.format(publication.endDateTime, 'dd-MM-yyyy HH:mm')}"></span></p>
+                    <hr>
+                    <a th:href="@{${'/publication/detail/' + publication.id}}" class="btn btn-lg btn-block btn-primary">Ver</a>
                 </div>
             </div>
         </div>

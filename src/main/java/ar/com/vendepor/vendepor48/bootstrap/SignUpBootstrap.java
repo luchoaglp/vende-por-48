@@ -66,7 +66,6 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         client1.addPublication(getPublication1());
         client1.addPublication(getPublication2());
-        client1.addPublication(getPublication3());
 
         return client1;
     }
@@ -80,6 +79,8 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
         client2.setUsername("username2");
         client2.setFirstName("fName2");
         client2.setLastName("lName2");
+
+        client2.addPublication(getPublication3());
 
         return client2;
     }
@@ -115,7 +116,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
                 "Con una resolución HD, ofrece efectos visuales potentes mientras te desplazas. Combinado con Dolby Audio, brinda una experiencia de entretenimiento radicalmente mejorada.");
 
         publication.setAmount(18258.9);
-        publication.setStartDateTime(LocalDateTime.of(2019, 04, 02, 00, 00, 00));
+        publication.setStartDateTime(LocalDateTime.now().plusHours(1));
 
         return publication;
     }
@@ -159,7 +160,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         publication.setAmount(1699d);
 
-        publication.setStartDateTime(LocalDateTime.of(2019, 04, 03, 14, 20, 00));
+        publication.setStartDateTime(LocalDateTime.now().minusHours(1));
 
         PublicationMessage message1 = new PublicationMessage("Message 1", LocalDateTime.now());
         PublicationMessage message2 = new PublicationMessage("Message 2", LocalDateTime.now());
@@ -184,7 +185,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         publication.setAmount(6605d);
 
-        publication.setStartDateTime(LocalDateTime.of(2019, 05, 03, 14, 20, 00));
+        publication.setStartDateTime(LocalDateTime.now());
 
         return publication;
     }

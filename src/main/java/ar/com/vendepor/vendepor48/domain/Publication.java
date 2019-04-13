@@ -26,6 +26,9 @@ public class Publication {
     private Double amount;
     private LocalDateTime startDateTime;
 
+    @Transient
+    private LocalDateTime endDateTime;
+
     @ManyToOne
     private Client client;
 
@@ -39,8 +42,15 @@ public class Publication {
         return this;
     }
 
-    public String shortDescription() {
-        return description.substring(0, 90);
+    public LocalDateTime getEndDateTime() {
+        return startDateTime.plusHours(48);
     }
 
+    @Override
+    public String toString() {
+        return "Publication{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

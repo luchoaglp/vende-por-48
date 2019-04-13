@@ -96,10 +96,12 @@ public class ClientController {
                 request.getLocale(),
                 token, signUpClient);
 
-        model.addAttribute("signUpToken", signUpToken); // Dev
-        model.addAttribute("smm", smm); // Dev
+        // Todo: Send verification email
+        model.addAttribute("signUpToken", signUpToken);
+        model.addAttribute("smm", smm);
 
-        return "signup"; // Dev
+        // Todo: Return successful page
+        return "signup";
     }
 
     @GetMapping("/register/{token}")
@@ -109,7 +111,7 @@ public class ClientController {
 
         // If user is in session
         if(principal != null) {
-            return "redirect:/home";
+            return "redirect:/";
         }
 
         SignUpToken signUpToken = signUpTokenService.findByToken(token);

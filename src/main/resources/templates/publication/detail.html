@@ -7,7 +7,7 @@
 
 <nav th:replace="common/navbar :: navbar"/>
 
-<!--/*@thymesVar id="Publication" type="ar.com.vendepor.vendepor48.domain"*/-->
+<!--/*@thymesVar id="publication" type="ar.com.vendepor.vendepor48.domain.Publication"*/-->
 
 <div class="container">
 
@@ -24,11 +24,16 @@
                     <p class="card-text" th:text="${publication.description}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-4">
+                    <a th:href="@{${'/publication/' + publication.id + '/update'}}" class="btn btn-lg btn-block btn-outline-primary">Actualizar</a>
+                </div>
+            </div>
         </div>
     </div>
 
     <ul class="list-group">
-        <li class="list-group-item" th:each="msg : ${publication.messages}">[<b th:text="${msg.dateTime}"></b>]: <span th:text="${msg.message}"></span></li>
+        <li class="list-group-item" th:each="msg : ${publication.messages}">[<b th:text="${msg.messageDateTime}"></b>]: <span th:text="${msg.message}"></span></li>
     </ul>
 
     <footer th:replace="common/footer :: footer"/>

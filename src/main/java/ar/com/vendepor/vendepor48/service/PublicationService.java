@@ -9,4 +9,5 @@ public interface PublicationService {
     Publication findById(Long id);
     List<Publication> findAll();
 
+    Publication save(Publication publication);
 }
