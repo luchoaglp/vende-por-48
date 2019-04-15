@@ -1,5 +1,6 @@
 package ar.com.vendepor.vendepor48.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,8 +22,13 @@ public class PublicationMessage {
 
     private LocalDateTime messageDateTime;
 
+    @JsonIgnore
     @ManyToOne
     private Publication publication;
+
+    //@JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER)
+    private Client client;
 
     public PublicationMessage(String message, LocalDateTime messageDateTime) {
         this.message = message;
@@ -34,6 +40,7 @@ public class PublicationMessage {
         return "PublicationMessage{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
+                ", client=" + client +
                 '}';
     }
 }

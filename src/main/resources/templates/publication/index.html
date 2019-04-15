@@ -20,8 +20,8 @@
                     <h5 class="card-title" th:text="${publication.title}">Card title</h5>
                     <h2 class="card-price text-center" th:text="${'$' + #numbers.formatDecimal(publication.amount, 0, 2, 'POINT')}">$0</h2>
                     <hr>
-                    <p>Empieza: <span th:text="${#temporals.format(publication.startDateTime, 'dd-MM-yyyy HH:mm')}"></span><br>
-                       Termina: <span th:text="${#temporals.format(publication.endDateTime, 'dd-MM-yyyy HH:mm')}"></span></p>
+                    <p>Empieza: <span th:text="${#temporals.format(publication.startDateTime, 'yyyy/MM/dd HH:mm')}"></span><br>
+                       Termina: <span th:text="${#temporals.format(publication.endDateTime, 'yyyy/MM/dd HH:mm')}"></span></p>
                     <hr>
                     <a th:href="@{${'/publication/detail/' + publication.id}}" class="btn btn-lg btn-block btn-primary">Ver</a>
                 </div>

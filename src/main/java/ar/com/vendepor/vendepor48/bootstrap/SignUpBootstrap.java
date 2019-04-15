@@ -51,13 +51,32 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         List<Client> clients = new ArrayList<>();
 
-        clients.add(getClient1(signUpTokenSaved));
-        clients.add(getClient2());
+        Publication publication1 = getPublication1();
+        Publication publication2 = getPublication2();
+        Publication publication3 = getPublication3();
+
+        PublicationMessage message1 = new PublicationMessage("Message 1", LocalDateTime.now());
+        PublicationMessage message2 = new PublicationMessage("Message 2", LocalDateTime.now());
+        PublicationMessage message3 = new PublicationMessage("Message 3", LocalDateTime.now());
+
+        publication1.addPublicationMessage(message1);
+        publication1.addPublicationMessage(message2);
+
+        Client client1 = getClient1(signUpTokenSaved);
+        Client client2 = getClient2();
+
+        client1.addPublication(publication1);
+        client1.addPublication(publication3);
+        client2.addPublication(publication2);
+
+        message1.setClient(client2);
+        message2.setClient(client2);
+        message3.setClient(client2);
+
+        clients.add(client1);
+        clients.add(client2);
 
         clientService.saveAll(clients);
-
-        Publication publication1 = clients.get(0).getPublications().get(0);
-        PublicationMessage message3 = new PublicationMessage("Message 3", LocalDateTime.now());
 
         publicationMessageService.save(message3, publication1.getId());
     }
@@ -72,9 +91,6 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
         client1.setFirstName("fName1");
         client1.setLastName("lName1");
 
-        client1.addPublication(getPublication1());
-        client1.addPublication(getPublication2());
-
         return client1;
     }
 
@@ -87,8 +103,6 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
         client2.setUsername("username2");
         client2.setFirstName("fName2");
         client2.setLastName("lName2");
-
-        client2.addPublication(getPublication3());
 
         return client2;
     }
@@ -169,12 +183,6 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
         publication.setAmount(1699d);
 
         publication.setStartDateTime(LocalDateTime.now().minusHours(1));
-
-        PublicationMessage message1 = new PublicationMessage("Message 1", LocalDateTime.now());
-        PublicationMessage message2 = new PublicationMessage("Message 2", LocalDateTime.now());
-
-        publication.addPublicationMessage(message1);
-        publication.addPublicationMessage(message2);
 
         return publication;
     }

@@ -1,5 +1,6 @@
 package ar.com.vendepor.vendepor48.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class Client extends User {
     @Size(min = 2, max = 50, message =  "{lastName.size}")
     private String lastName;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<Publication> publications = new ArrayList<>();
 
