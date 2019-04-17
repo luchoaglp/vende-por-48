@@ -67,7 +67,11 @@ public class PublicationController {
     @GetMapping("/publication/new")
     public String newPublication(Model model) {
 
-        model.addAttribute("publication", new Publication());
+        Publication publication = new Publication();
+        publication.setAmount(0.0);
+        publication.setStartDateTime(LocalDateTime.now());
+
+        model.addAttribute("publication", publication);
 
         return "publication/form";
     }
@@ -98,8 +102,6 @@ public class PublicationController {
             }
         }
 
-        // Todo: Add publication date
-        publication.setStartDateTime(LocalDateTime.now().plusDays(1));
         publication.setClient(client);
 
         publication = publicationService.save(publication);

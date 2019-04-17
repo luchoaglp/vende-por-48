@@ -3,6 +3,7 @@ package ar.com.vendepor.vendepor48.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,6 +25,8 @@ public class Publication {
     @Lob
     private String description;
     private Double amount;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startDateTime;
 
     @Transient
