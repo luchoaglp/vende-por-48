@@ -4,7 +4,7 @@ import ar.com.vendepor.vendepor48.domain.Client;
 import ar.com.vendepor.vendepor48.domain.security.RegisterClient;
 import ar.com.vendepor.vendepor48.domain.security.SignUpClient;
 import ar.com.vendepor.vendepor48.domain.security.SignUpToken;
-import ar.com.vendepor.vendepor48.exception.SignUpTokenException;
+import ar.com.vendepor.vendepor48.exception.MvcException;
 import ar.com.vendepor.vendepor48.service.ClientService;
 import ar.com.vendepor.vendepor48.service.security.SignUpTokenService;
 import ar.com.vendepor.vendepor48.utility.MailConstructor;
@@ -156,7 +156,7 @@ public class ClientController {
         validateToken(signUpToken);
 
         if(!signUpToken.getToken().equals(token)) {
-            throw new SignUpTokenException("Token inválido");
+            throw new MvcException("Token inválido");
         }
 
         Client client = new Client();
@@ -173,10 +173,10 @@ public class ClientController {
 
     private void validateToken(SignUpToken signUpToken) {
         if(signUpToken == null) {
-            throw new SignUpTokenException("Token inválido");
+            throw new MvcException("Token inválido");
         }
         if(signUpToken.isTokenExpired()) {
-            throw new SignUpTokenException("El token ha expirado");
+            throw new MvcException("El token ha expirado");
         }
     }
 

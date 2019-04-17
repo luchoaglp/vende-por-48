@@ -2,7 +2,7 @@ package ar.com.vendepor.vendepor48.controller;
 
 import ar.com.vendepor.vendepor48.domain.Client;
 import ar.com.vendepor.vendepor48.domain.Publication;
-import ar.com.vendepor.vendepor48.exception.PublicationException;
+import ar.com.vendepor.vendepor48.exception.MvcException;
 import ar.com.vendepor.vendepor48.security.UserPrincipal;
 import ar.com.vendepor.vendepor48.service.ClientService;
 import ar.com.vendepor.vendepor48.service.PublicationService;
@@ -94,7 +94,7 @@ public class PublicationController {
             // The publication does not belong to the client
             if(!publicationService.findById(publication.getId())
                     .getClient().getId().equals(client.getId())) {
-                throw new PublicationException("No se puede modificar");
+                throw new MvcException("No se puede modificar");
             }
         }
 
