@@ -6,7 +6,7 @@ import ar.com.vendepor.vendepor48.domain.PublicationMessage;
 import ar.com.vendepor.vendepor48.domain.security.SignUpClient;
 import ar.com.vendepor.vendepor48.domain.security.SignUpToken;
 import ar.com.vendepor.vendepor48.service.ClientService;
-import ar.com.vendepor.vendepor48.service.PublicationMessageService;
+import ar.com.vendepor.vendepor48.service.PublicationService;
 import ar.com.vendepor.vendepor48.service.security.SignUpTokenService;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -23,13 +23,13 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
     private final SignUpTokenService signUpTokenService;
     private final ClientService clientService;
-    private final PublicationMessageService publicationMessageService;
+    private final PublicationService publicationService;
     private final PasswordEncoder passwordEncoder;
 
-    public SignUpBootstrap(SignUpTokenService signUpTokenService, ClientService clientService, PublicationMessageService publicationMessageService, PasswordEncoder passwordEncoder) {
+    public SignUpBootstrap(SignUpTokenService signUpTokenService, ClientService clientService, PublicationService publicationService, PasswordEncoder passwordEncoder) {
         this.signUpTokenService = signUpTokenService;
         this.clientService = clientService;
-        this.publicationMessageService = publicationMessageService;
+        this.publicationService = publicationService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -78,7 +78,9 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         clientService.saveAll(clients);
 
-        publicationMessageService.save(message3, publication1.getId());
+        publication1.addPublicationMessage(message3);
+
+        publicationService.save(publication1);
     }
 
     private Client getClient1(SignUpToken signUpTokenSaved) {

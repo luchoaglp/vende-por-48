@@ -26,7 +26,6 @@ public class PublicationMessage {
     @ManyToOne
     private Publication publication;
 
-    //@JsonIgnore
     @OneToOne(fetch = FetchType.EAGER)
     private Client client;
 
