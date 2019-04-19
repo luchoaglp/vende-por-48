@@ -1,7 +1,3 @@
-function disconnect(stompClient) {
-
-}
-
 $(function() {
 
     let stompClient = null;
@@ -22,7 +18,8 @@ $(function() {
             $messages.prepend(
                 `<li class="list-group-item">
                     [<b>${dateTimeStr}</b>]
-                    <a href="#">${message.client.username}</a>
+                    <span class="text-success">${message.stars}&#8902;</span>
+                    <a href="#">${message.client.username}</a>:
                     ${message.message}
                 </li>`);
             });

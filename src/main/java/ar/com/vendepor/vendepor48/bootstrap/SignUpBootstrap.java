@@ -55,9 +55,9 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
         Publication publication2 = getPublication2();
         Publication publication3 = getPublication3();
 
-        PublicationMessage message1 = new PublicationMessage("Message 1", LocalDateTime.now());
-        PublicationMessage message2 = new PublicationMessage("Message 2", LocalDateTime.now());
-        PublicationMessage message3 = new PublicationMessage("Message 3", LocalDateTime.now());
+        PublicationMessage message1 = new PublicationMessage("Message 1", LocalDateTime.now(), 0);
+        PublicationMessage message2 = new PublicationMessage("Message 2", LocalDateTime.now(), 2);
+        PublicationMessage message3 = new PublicationMessage("Message 3", LocalDateTime.now(), 1);
 
         publication1.addPublicationMessage(message1);
         publication1.addPublicationMessage(message2);

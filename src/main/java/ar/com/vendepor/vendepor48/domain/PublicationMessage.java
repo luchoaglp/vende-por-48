@@ -22,6 +22,8 @@ public class PublicationMessage {
 
     private LocalDateTime messageDateTime;
 
+    private Integer stars;
+
     @JsonIgnore
     @ManyToOne
     private Publication publication;
@@ -32,6 +34,12 @@ public class PublicationMessage {
     public PublicationMessage(String message, LocalDateTime messageDateTime) {
         this.message = message;
         this.messageDateTime = messageDateTime;
+    }
+
+    public PublicationMessage(String message, LocalDateTime messageDateTime, Integer stars) {
+        this.message = message;
+        this.messageDateTime = messageDateTime;
+        this.stars = stars;
     }
 
     @Override
