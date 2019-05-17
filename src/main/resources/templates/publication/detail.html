@@ -53,7 +53,6 @@
     <ul class="list-group shadow-sm" id="messages">
         <li class="list-group-item" th:each="msg : ${publication.messages}">
             [<b th:text="${#temporals.format(msg.messageDateTime, 'yyyy/MM/dd HH:mm:ss')}"></b>]
-            <span class="text-success" th:text="${msg.stars} + '&#8902;'"></span>
             <a href="#" th:text="${msg.client.username}"></a>:
             <span th:text="${msg.message}"></span>
         </li>
