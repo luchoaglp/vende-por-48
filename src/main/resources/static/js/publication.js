@@ -1,8 +1,26 @@
 $(function() {
 
-    let stompClient = null;
     const $messages = $('#messages');
     const $err = $('#err');
+    let messages = [];
+    let stompClient = null;
+
+    $.get("/publication/messages/1", function(data) {
+        messages = data;
+        messages.forEach(message => {
+        const dateTime = new Date(message.messageDateTime);
+        const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+        $messages.append(
+            `<li class="list-group-item">
+                [<b>${dateTimeStr}</b>]
+                <a href="#">${message.client.username}</a>:
+                ${message.message}
+            </li>`);
+        });
+
+    }).fail(function() {
+        console.log("Error");
+    });
 
     let connect = () => {
         let socket = new SockJS('/ws');

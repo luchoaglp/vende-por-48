@@ -5,31 +5,39 @@ import ar.com.vendepor.vendepor48.domain.PublicationMessage;
 import ar.com.vendepor.vendepor48.exception.RestException;
 import ar.com.vendepor.vendepor48.security.UserPrincipal;
 import ar.com.vendepor.vendepor48.service.ClientService;
+import ar.com.vendepor.vendepor48.service.PublicationMessageService;
 import ar.com.vendepor.vendepor48.service.PublicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 public class PublicationMessageController {
 
     private final PublicationService publicationService;
+    private final PublicationMessageService publicationMessageService;
     private final ClientService clientService;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public PublicationMessageController(PublicationService publicationService, ClientService clientService, SimpMessagingTemplate simpMessagingTemplate) {
+    public PublicationMessageController(PublicationService publicationService, PublicationMessageService publicationMessageService, ClientService clientService, SimpMessagingTemplate simpMessagingTemplate) {
         this.publicationService = publicationService;
+        this.publicationMessageService = publicationMessageService;
         this.clientService = clientService;
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
+    @GetMapping("/publication/messages/{publicationId}")
+    public ResponseEntity<?> createPaymentLink(@PathVariable("publicationId") Long publicationId) {
+
+        List<PublicationMessage> messages = publicationMessageService.getByPublicationId(publicationId);
+
+        return ResponseEntity.ok(messages);
+    }
 
     @PostMapping("/publication/message/{publicationId}")
     public ResponseEntity<?> createPaymentLink(@PathVariable("publicationId") Long publicationId,
