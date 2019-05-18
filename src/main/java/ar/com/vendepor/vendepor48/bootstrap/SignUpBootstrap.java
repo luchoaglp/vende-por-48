@@ -55,12 +55,18 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
         Publication publication2 = getPublication2();
         Publication publication3 = getPublication3();
 
-        PublicationMessage message1 = new PublicationMessage("Message 1", LocalDateTime.now());
-        PublicationMessage message2 = new PublicationMessage("Message 2", LocalDateTime.now());
-        PublicationMessage message3 = new PublicationMessage("Message 3", LocalDateTime.now());
+        PublicationMessage message1 = new PublicationMessage("Message 1", LocalDateTime.now().plusSeconds(1));
+        PublicationMessage message2 = new PublicationMessage("Message 2", LocalDateTime.now().plusSeconds(2));
+        PublicationMessage message3 = new PublicationMessage("Message 3", LocalDateTime.now().plusSeconds(3));
+        PublicationMessage message4 = new PublicationMessage("Message 4", LocalDateTime.now().plusSeconds(4), true);
+        PublicationMessage message5 = new PublicationMessage("Message 5", LocalDateTime.now().plusSeconds(5));
+        PublicationMessage message6 = new PublicationMessage("Message 6", LocalDateTime.now().plusSeconds(6));
 
         publication1.addPublicationMessage(message1);
         publication1.addPublicationMessage(message2);
+        publication1.addPublicationMessage(message4);
+        publication1.addPublicationMessage(message5);
+        publication1.addPublicationMessage(message6);
 
         Client client1 = getClient1(signUpTokenSaved);
         Client client2 = getClient2();
@@ -72,6 +78,9 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
         message1.setClient(client2);
         message2.setClient(client2);
         message3.setClient(client2);
+        message4.setClient(client2);
+        message5.setClient(client2);
+        message6.setClient(client2);
 
         clients.add(client1);
         clients.add(client2);
@@ -183,7 +192,6 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
                 "(8) . No aceptamos ningún producto en parte de pago.");
 
         publication.setAmount(1699d);
-
         publication.setStartDateTime(LocalDateTime.now().minusHours(1));
 
         return publication;
@@ -202,7 +210,6 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
                 "Tapizado en tela jackard totalmente matelaseada.");
 
         publication.setAmount(6605d);
-
         publication.setStartDateTime(LocalDateTime.now());
 
         return publication;

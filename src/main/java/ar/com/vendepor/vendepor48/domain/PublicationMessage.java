@@ -22,6 +22,8 @@ public class PublicationMessage {
 
     private LocalDateTime messageDateTime;
 
+    private Boolean liked;
+
     @JsonIgnore
     @ManyToOne
     private Publication publication;
@@ -32,6 +34,13 @@ public class PublicationMessage {
     public PublicationMessage(String message, LocalDateTime messageDateTime) {
         this.message = message;
         this.messageDateTime = messageDateTime;
+        this.liked = false;
+    }
+
+    public PublicationMessage(String message, LocalDateTime messageDateTime, Boolean liked) {
+        this.message = message;
+        this.messageDateTime = messageDateTime;
+        this.liked = liked;
     }
 
     @Override
