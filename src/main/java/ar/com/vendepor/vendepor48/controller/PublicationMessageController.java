@@ -69,4 +69,14 @@ public class PublicationMessageController {
         return ResponseEntity.ok(publicationMessage);
     }
 
+    @GetMapping("/publication/message/{publicationId}/like/{messageId}")
+    public ResponseEntity<?> messageLiked(@PathVariable("publicationId") Long publicationId,
+                                          @PathVariable("messageId") Long messageId) {
+
+        System.out.println(publicationId);
+        System.out.println(messageId);
+
+        return ResponseEntity.ok(new String("OK"));
+    }
+
 }

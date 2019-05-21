@@ -9,6 +9,9 @@ $(function() {
     const publicationId = publication[publication.length - 1];
 
     function displayMsg(message) {
+
+        console.log(message);
+
         const dateTime = new Date(message.messageDateTime);
         const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
         const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
@@ -18,6 +21,8 @@ $(function() {
                 <a href="#">${message.client.username}</a>:
                 ${message.message}
                 ${liked}
+                <a class href="#">${message.client.username}</a>:
+                <a href="/publication/message/${publicationId}/like/${message.id}/" class="btn btn-outline-success btn-sm">Me Gusta</button>
             </li>`);
     }
 

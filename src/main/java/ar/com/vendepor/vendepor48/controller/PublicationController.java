@@ -10,6 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
@@ -44,11 +46,24 @@ public class PublicationController {
 
     @GetMapping("/publication/detail/{id}")
     public String publicationDetail(@PathVariable("id") Long id,
-                                    Model model) {
+                                    Model model,
+                                    Principal principal) {
+
+        Publication publication = publicationService.findById(id);
 
         model.addAttribute("publication", publicationService.findById(id));
 
-        return "publication/detail";
+        if(principal == null) {
+            return "publication/buyer/detail";
+        }
+
+        UserPrincipal user = (UserPrincipal) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+
+        if(publication.getClient().getId().equals(user.getId())) {
+            return "publication/seller/detail";
+        }
+
+        return "publication/buyer/detail";
     }
 
     @GetMapping(value = "/publication/img/{id}", produces = MediaType.IMAGE_JPEG_VALUE)

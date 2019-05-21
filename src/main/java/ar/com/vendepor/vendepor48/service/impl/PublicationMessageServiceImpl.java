@@ -18,7 +18,7 @@ public class PublicationMessageServiceImpl implements PublicationMessageService 
 
     @Override
     public List<PublicationMessage> getByPublicationId(Long publicationId) {
-        return publicationMessageRepository.findByPublicationId(publicationId);
+        return publicationMessageRepository.findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
     }
 
     /*

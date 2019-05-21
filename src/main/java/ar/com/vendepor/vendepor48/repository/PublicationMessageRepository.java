@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface PublicationMessageRepository extends CrudRepository<PublicationMessage, Long> {
 
-    List<PublicationMessage> findByPublicationId(Long publicationId);
+    List<PublicationMessage> findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(Long publicationId);
 
 }
