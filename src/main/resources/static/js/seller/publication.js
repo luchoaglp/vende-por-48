@@ -9,24 +9,22 @@ $(function() {
     const publicationId = publication[publication.length - 1];
 
     function displayMsg(message) {
-
-        console.log(message);
-
         const dateTime = new Date(message.messageDateTime);
         const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
         const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
+        const likeBtn = !message.liked ? `<a href="/publication/message/${publicationId}/like/${message.id}/" class="btn btn-outline-success btn-sm">Me Gusta</a>` : '';
+
         $messages.append(
             `<li class="list-group-item">
                 [<b>${dateTimeStr}</b>]
                 <a href="#">${message.client.username}</a>:
                 ${message.message}
-                ${liked}
-                <a class href="#">${message.client.username}</a>:
-                <a href="/publication/message/${publicationId}/like/${message.id}/" class="btn btn-outline-success btn-sm">Me Gusta</button>
+                ${liked}${likeBtn}
+                <a href="/publication/message/${publicationId}/sell/${message.id}/" class="btn btn-outline-info btn-sm float-right">Vender</button>
             </li>`);
     }
 
-    $.get("/publication/messages/" + publicationId, function(data) {
+    $.get("/publication/messages/seller/" + publicationId, function(data) {
         messages = data;
         messages.forEach(message => displayMsg(message));
 
@@ -47,25 +45,6 @@ $(function() {
     }
 
     connect();
-
-    $('#send').click(() => {
-
-        $.ajax({
-            method: "POST",
-            url: `/publication/message/${publicationId}`,
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            data: JSON.stringify({ message: $.trim($('#msg').val()) })
-        })
-        .done(function(res) {
-            console.log('Ajax', res);
-        })
-        .fail(function(jqXHR, textStatus) {
-            console.error(jqXHR, textStatus);
-            $err.text(jqXHR.responseJSON.message);
-        });
-
-    });
 
     $(window).bind('beforeunload', () => {
         if(stompClient !== null) {

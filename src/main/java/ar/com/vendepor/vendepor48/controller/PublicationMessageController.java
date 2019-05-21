@@ -31,18 +31,26 @@ public class PublicationMessageController {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    @GetMapping("/publication/messages/{publicationId}")
-    public ResponseEntity<?> createPaymentLink(@PathVariable("publicationId") Long publicationId) {
+    @GetMapping("/publication/messages/buyer/{publicationId}")
+    public ResponseEntity<?> getBuyerPublicationMessages(@PathVariable("publicationId") Long publicationId) {
 
-        List<PublicationMessage> messages = publicationMessageService.getByPublicationId(publicationId);
+        List<PublicationMessage> messages = publicationMessageService.findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
+
+        return ResponseEntity.ok(messages);
+    }
+
+    @GetMapping("/publication/messages/seller/{publicationId}")
+    public ResponseEntity<?> getSellerPublicationMessages(@PathVariable("publicationId") Long publicationId) {
+
+        List<PublicationMessage> messages = publicationMessageService.findTop10ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
 
         return ResponseEntity.ok(messages);
     }
 
     @PostMapping("/publication/message/{publicationId}")
-    public ResponseEntity<?> createPaymentLink(@PathVariable("publicationId") Long publicationId,
-                                               @RequestBody PublicationMessage publicationMessage,
-                                               Principal principal) {
+    public ResponseEntity<?> createPublicationMessage(@PathVariable("publicationId") Long publicationId,
+                                                      @RequestBody PublicationMessage publicationMessage,
+                                                      Principal principal) {
 
         if(principal == null) {
             throw new RestException("Debes ingresar para realizar tu oferta.");

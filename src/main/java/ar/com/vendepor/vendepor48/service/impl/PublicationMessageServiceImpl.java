@@ -17,8 +17,13 @@ public class PublicationMessageServiceImpl implements PublicationMessageService 
     }
 
     @Override
-    public List<PublicationMessage> getByPublicationId(Long publicationId) {
+    public List<PublicationMessage> findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(Long publicationId) {
         return publicationMessageRepository.findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
+    }
+
+    @Override
+    public List<PublicationMessage> findTop10ByPublicationIdOrderByLikedDescMessageDateTimeDesc(Long publicationId) {
+        return publicationMessageRepository.findTop10ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
     }
 
     /*
