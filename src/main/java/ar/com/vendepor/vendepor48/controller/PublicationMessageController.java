@@ -65,12 +65,12 @@ public class PublicationMessageController {
             throw new RestException("No podés realizar una oferta en tu publicación.");
         }
 
-        publicationMessage.setMessageDateTime(LocalDateTime.now());
+        publicationMessage.setPublication(publication);
         publicationMessage.setClient(clientService.getById(user.getId()));
+        publicationMessage.setMessageDateTime(LocalDateTime.now());
+        publicationMessage.setLiked(false);
 
-        publication.addPublicationMessage(publicationMessage);
-
-        publicationService.save(publication);
+        publicationMessageService.save(publicationMessage);
 
         simpMessagingTemplate.convertAndSend("/queue/reply", publicationMessage);
 

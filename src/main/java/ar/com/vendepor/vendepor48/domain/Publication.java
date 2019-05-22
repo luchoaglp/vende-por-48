@@ -36,7 +36,7 @@ public class Publication {
     private Client client;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "publication")
-    @OrderBy("id DESC")
+    //@OrderBy("id DESC")
     private List<PublicationMessage> messages = new ArrayList<>();
 
     public Publication addPublicationMessage(PublicationMessage message) {

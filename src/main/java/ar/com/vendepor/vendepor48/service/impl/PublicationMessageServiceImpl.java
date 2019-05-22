@@ -17,6 +17,11 @@ public class PublicationMessageServiceImpl implements PublicationMessageService 
     }
 
     @Override
+    public PublicationMessage save(PublicationMessage publicationMessage) {
+        return publicationMessageRepository.save(publicationMessage);
+    }
+
+    @Override
     public List<PublicationMessage> findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(Long publicationId) {
         return publicationMessageRepository.findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
     }

@@ -63,7 +63,6 @@ public class UserPrincipal implements UserDetails {
                     client.getPassword(),
                     authorities
             );
-
         }
 
         return null;

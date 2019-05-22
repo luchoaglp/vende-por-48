@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface PublicationMessageService {
 
+    PublicationMessage save(PublicationMessage publicationMessage);
+
     List<PublicationMessage> findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(Long publicationId);
     List<PublicationMessage> findTop10ByPublicationIdOrderByLikedDescMessageDateTimeDesc(Long publicationId);
-
 }
