@@ -49,7 +49,7 @@ public class PublicationMessageController {
 
     @PostMapping("/publication/message/{publicationId}")
     public ResponseEntity<?> createPublicationMessage(@PathVariable("publicationId") Long publicationId,
-                                                      @RequestBody PublicationMessage publicationMessage,
+                                                      @RequestBody PublicationMessage message,
                                                       Principal principal) {
 
         if(principal == null) {
@@ -65,26 +65,33 @@ public class PublicationMessageController {
             throw new RestException("No podés realizar una oferta en tu publicación.");
         }
 
-        publicationMessage.setPublication(publication);
-        publicationMessage.setClient(clientService.getById(user.getId()));
-        publicationMessage.setMessageDateTime(LocalDateTime.now());
-        publicationMessage.setLiked(false);
+        message.setPublication(publication);
+        message.setClient(clientService.getById(user.getId()));
+        message.setMessageDateTime(LocalDateTime.now());
+        message.setLiked(false);
 
-        publicationMessageService.save(publicationMessage);
+        publicationMessageService.save(message);
 
-        simpMessagingTemplate.convertAndSend("/queue/reply", publicationMessage);
+        simpMessagingTemplate.convertAndSend("/queue/reply", message);
 
-        return ResponseEntity.ok(publicationMessage);
+        return ResponseEntity.ok(message);
     }
 
-    @GetMapping("/publication/message/{publicationId}/like/{messageId}")
+    @PostMapping("/publication/message/{publicationId}/like/{messageId}")
     public ResponseEntity<?> messageLiked(@PathVariable("publicationId") Long publicationId,
                                           @PathVariable("messageId") Long messageId) {
 
-        System.out.println(publicationId);
-        System.out.println(messageId);
+        PublicationMessage message = publicationMessageService.findById(messageId);
 
-        return ResponseEntity.ok(new String("OK"));
+        if(!message.getPublication().getId().equals(publicationId)) {
+            throw new RestException("No podes realizar una oferta en una publicación distinta a la que estás visualizando.");
+        }
+
+        message.setLiked(true);
+
+        publicationMessageService.save(message);
+
+        return ResponseEntity.ok(message);
     }
 
 }

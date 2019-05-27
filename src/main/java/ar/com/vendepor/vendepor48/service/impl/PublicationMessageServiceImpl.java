@@ -17,6 +17,11 @@ public class PublicationMessageServiceImpl implements PublicationMessageService 
     }
 
     @Override
+    public PublicationMessage findById(Long id) {
+        return publicationMessageRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public PublicationMessage save(PublicationMessage publicationMessage) {
         return publicationMessageRepository.save(publicationMessage);
     }

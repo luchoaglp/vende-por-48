@@ -8,39 +8,59 @@ $(function() {
     const publication = window.location.pathname.split("/");
     const publicationId = publication[publication.length - 1];
 
-    function displayMessages() {
+    function replaceMessage(message) {
+        messages.forEach((element, index) => {
+            if(element.id === message.id) {
+                messages[index] = message;
+            }
+        });
+    }
 
+    function likeMessage(publicationId, messageId) {
+        $.post('/publication/message/' + publicationId + '/like/' + messageId, function(message) {
+            replaceMessage(message);
+            displayMessages();
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            console.error(jqXHR, textStatus, errorThrown);
+        });
+    }
+
+    function displayMessages() {
         messages.sort((msg1, msg2) => {
             if(msg1.liked === msg2.liked) {
                 return new Date(msg1.messageDateTime) > new Date(msg2.messageDateTime) ? -1 : 1;
             }
-
             return msg1.liked ? -1 : 1;
         });
-        let html = '';
+        $messages.html('');
         messages.forEach(message => {
+
             const dateTime = new Date(message.messageDateTime);
             const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
             const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
-            const likeBtn = !message.liked ? `<a href="/publication/message/${publicationId}/like/${message.id}/" class="btn btn-outline-success btn-sm">Me Gusta</a>` : '';
+            const btnId = `like${publicationId}-${message.id}`;
+            btnLike = !message.liked ? $('<button class="btn btn-outline-success btn-sm">Me Gusta</button>') : undefined;
 
-            html +=
-                `<li class="list-group-item">
-                    [<b>${dateTimeStr}</b>]
-                    <a href="#">${message.client.username}</a>:
-                    ${message.message}
-                    ${liked}${likeBtn}
-                    <a href="/publication/message/${publicationId}/sell/${message.id}/" class="btn btn-outline-info btn-sm float-right">Vender</a>
-                </li>`;
+            $messages.append(
+                $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>]<a href="#">' + message.client.username + '</a>:' + message.description + liked  + '<a href="/publication/message/${publicationId}/sell/${message.id}/" class="btn btn-outline-info btn-sm float-right">Vender</a></li>')
+            );
+
+            if(btnLike) {
+                $('#li' + message.id).append($(btnLike));
+                $(btnLike).bind("click", function() {
+                    likeMessage(publicationId, message.id);
+                });
+            }
         });
-        $messages.html(html);
     }
 
     $.get("/publication/messages/seller/" + publicationId, function(data) {
         messages = data;
         displayMessages();
-    }).fail(function() {
-        console.log("Error");
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+        console.error(jqXHR, textStatus, errorThrown);
     });
 
     let connect = () => {

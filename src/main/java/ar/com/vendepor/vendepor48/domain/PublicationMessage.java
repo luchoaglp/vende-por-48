@@ -18,7 +18,7 @@ public class PublicationMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String message;
+    private String description;
 
     private LocalDateTime messageDateTime;
 
@@ -31,14 +31,14 @@ public class PublicationMessage {
     @OneToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    public PublicationMessage(String message, LocalDateTime messageDateTime) {
-        this.message = message;
+    public PublicationMessage(String description, LocalDateTime messageDateTime) {
+        this.description = description;
         this.messageDateTime = messageDateTime;
         this.liked = false;
     }
 
-    public PublicationMessage(String message, LocalDateTime messageDateTime, Boolean liked) {
-        this.message = message;
+    public PublicationMessage(String description, LocalDateTime messageDateTime, Boolean liked) {
+        this.description = description;
         this.messageDateTime = messageDateTime;
         this.liked = liked;
     }
@@ -47,7 +47,7 @@ public class PublicationMessage {
     public String toString() {
         return "PublicationMessage{" +
                 "id=" + id +
-                ", message='" + message + '\'' +
+                ", description='" + description + '\'' +
                 ", client=" + client +
                 '}';
     }
