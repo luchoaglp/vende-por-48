@@ -39,15 +39,14 @@ $(function() {
             const dateTime = new Date(message.messageDateTime);
             const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
             const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
-            const btnId = `like${publicationId}-${message.id}`;
             btnLike = !message.liked ? $('<button class="btn btn-outline-success btn-sm">Me Gusta</button>') : undefined;
 
             $messages.append(
-                $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>]<a href="#">' + message.client.username + '</a>:' + message.description + liked  + '<a href="/publication/message/${publicationId}/sell/${message.id}/" class="btn btn-outline-info btn-sm float-right">Vender</a></li>')
+                $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + ' ' + liked  + '<a href="/publication/message/${publicationId}/sell/${message.id}/" class="btn btn-outline-info btn-sm float-right">Vender</a></li>')
             );
 
             if(btnLike) {
-                $('#li' + message.id).append($(btnLike));
+                $('#li' + message.id).append(btnLike);
                 $(btnLike).bind("click", function() {
                     likeMessage(publicationId, message.id);
                 });

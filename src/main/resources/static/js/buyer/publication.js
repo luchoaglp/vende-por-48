@@ -8,21 +8,37 @@ $(function() {
     const publication = window.location.pathname.split("/");
     const publicationId = publication[publication.length - 1];
 
-    function displayMsg(message) {
-        const dateTime = new Date(message.messageDateTime);
-        const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
-        const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
-        $messages.append(
-            `<li class="list-group-item">
-                [<b>${dateTimeStr}</b>]
-                <a class href="#">${message.client.username}</a>
-                ${liked}
-            </li>`);
+    function replaceMessage(message) {
+        messages.forEach((element, index) => {
+            if(element.id === message.id) {
+                messages[index] = message;
+            }
+        });
     }
+
+    function displayMessages() {
+        messages.sort((msg1, msg2) => {
+            if(msg1.liked === msg2.liked) {
+                return new Date(msg1.messageDateTime) > new Date(msg2.messageDateTime) ? -1 : 1;
+            }
+            return msg1.liked ? -1 : 1;
+        });
+            $messages.html('');
+            messages.forEach(message => {
+
+                const dateTime = new Date(message.messageDateTime);
+                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+                const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
+
+                $messages.append(
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
+                );
+            });
+        }
 
     $.get("/publication/messages/buyer/" + publicationId, function(data) {
         messages = data;
-        messages.forEach(message => displayMsg(message));
+        displayMessages();
 
     }).fail(function() {
         console.log("Error");
@@ -35,7 +51,8 @@ $(function() {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/queue/reply', function (msg) {
                 const message = JSON.parse(msg.body);
-                displayMsg(message);
+                messages.push(message);
+                displayMessages();
             });
         });
     }
@@ -43,16 +60,15 @@ $(function() {
     connect();
 
     $('#send').click(() => {
-
         $.ajax({
             method: "POST",
             url: `/publication/message/${publicationId}`,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
-            data: JSON.stringify({ message: $.trim($('#msg').val()) })
+            data: JSON.stringify({ description: $.trim($('#msg').val()) })
         })
         .done(function(res) {
-            console.log('Ajax', res);
+            console.log("AJAX", res);
         })
         .fail(function(jqXHR, textStatus) {
             console.error(jqXHR, textStatus);
