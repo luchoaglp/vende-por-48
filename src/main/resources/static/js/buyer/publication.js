@@ -9,11 +9,13 @@ $(function() {
     const publicationId = publication[publication.length - 1];
 
     function replaceMessage(message) {
-        messages.forEach((element, index) => {
-            if(element.id === message.id) {
-                messages[index] = message;
+        for(let i = 0; i < messages.length; i++) {
+            if(messages[i].id === message.id) {
+                messages[i] = message;
+                return;
             }
-        });
+        }
+        messages.push(message);
     }
 
     function displayMessages() {
@@ -23,18 +25,18 @@ $(function() {
             }
             return msg1.liked ? -1 : 1;
         });
-            $messages.html('');
-            messages.forEach(message => {
+        $messages.html('');
+        messages.forEach(message => {
 
-                const dateTime = new Date(message.messageDateTime);
-                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
-                const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
+            const dateTime = new Date(message.messageDateTime);
+            const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+            const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
 
-                $messages.append(
-                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
-                );
-            });
-        }
+            $messages.append(
+                $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
+            );
+        });
+    }
 
     $.get("/publication/messages/buyer/" + publicationId, function(data) {
         messages = data;
@@ -51,7 +53,7 @@ $(function() {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/queue/reply', function (msg) {
                 const message = JSON.parse(msg.body);
-                messages.push(message);
+                replaceMessage(message);
                 displayMessages();
             });
         });
@@ -67,8 +69,8 @@ $(function() {
             dataType: 'json',
             data: JSON.stringify({ description: $.trim($('#msg').val()) })
         })
-        .done(function(res) {
-            console.log("AJAX", res);
+        .done(function(message) {
+            console.log("AJAX", message);
         })
         .fail(function(jqXHR, textStatus) {
             console.error(jqXHR, textStatus);

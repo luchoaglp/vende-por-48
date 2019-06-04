@@ -91,6 +91,8 @@ public class PublicationMessageController {
 
         publicationMessageService.save(message);
 
+        simpMessagingTemplate.convertAndSend("/queue/reply", message);
+
         return ResponseEntity.ok(message);
     }
 

@@ -9,17 +9,18 @@ $(function() {
     const publicationId = publication[publication.length - 1];
 
     function replaceMessage(message) {
-        messages.forEach((element, index) => {
-            if(element.id === message.id) {
-                messages[index] = message;
+        for(let i = 0; i < messages.length; i++) {
+            if(messages[i].id === message.id) {
+                messages[i] = message;
+                return;
             }
-        });
+        }
+        messages.push(message);
     }
 
     function likeMessage(publicationId, messageId) {
         $.post('/publication/message/' + publicationId + '/like/' + messageId, function(message) {
-            replaceMessage(message);
-            displayMessages();
+            console.log("AJAX", message);
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
             console.error(jqXHR, textStatus, errorThrown);
@@ -69,7 +70,7 @@ $(function() {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/queue/reply', function (msg) {
                 const message = JSON.parse(msg.body);
-                messages.push(message);
+                replaceMessage(message);
                 displayMessages();
             });
         });
