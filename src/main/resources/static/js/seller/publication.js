@@ -72,6 +72,7 @@ $(function() {
                 const message = JSON.parse(msg.body);
                 replaceMessage(message);
                 displayMessages();
+                console.log(messages);
             });
         });
     }
