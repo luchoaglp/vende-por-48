@@ -96,4 +96,53 @@ public class PublicationMessageController {
         return ResponseEntity.ok(message);
     }
 
+    @PostMapping("/publication/message/{publicationId}/sell/{messageId}")
+    public ResponseEntity<?> soldPublication(@PathVariable("publicationId") Long publicationId,
+                                  @PathVariable("messageId") Long messageId) {
+
+        System.out.println("P_ID: " + publicationId + ", M_ID: " + messageId);
+
+        Publication publication = publicationService.findById(publicationId);
+
+        publication.setSold(true);
+
+        PublicationMessage message = null;
+
+        for(PublicationMessage publicationMessage : publication.getMessages()) {
+            if(publicationMessage.getId().equals(messageId)) {
+                publicationMessage.setSold(true);
+                message = publicationMessage;
+                break;
+            }
+        }
+
+        publicationService.save(publication);
+
+        /*
+        UserPrincipal user = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Client client = clientService.getById(user.getId());
+
+        // Update
+        if(publication.getId() != null) {
+
+            // The publication does not belong to the client
+            if(!publicationService.findById(publication.getId())
+                    .getClient().getId().equals(client.getId())) {
+                throw new MvcException("No se puede vender");
+            }
+        }
+
+        publication.setClient(client);
+
+        publication = publicationService.save(publication);
+
+        */
+
+        simpMessagingTemplate.convertAndSend("/queue/reply", message);
+
+        //return "redirect:/publication/detail/" + publicationId;
+        return ResponseEntity.ok(message);
+    }
+
 }

@@ -150,6 +150,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         publication.setAmount(18258.9);
         publication.setStartDateTime(LocalDateTime.now().plusHours(1));
+        publication.setSold(false);
 
         return publication;
     }
@@ -193,6 +194,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         publication.setAmount(1699d);
         publication.setStartDateTime(LocalDateTime.now().minusHours(1));
+        publication.setSold(false);
 
         return publication;
     }
@@ -211,6 +213,7 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         publication.setAmount(6605d);
         publication.setStartDateTime(LocalDateTime.now());
+        publication.setSold(false);
 
         return publication;
     }

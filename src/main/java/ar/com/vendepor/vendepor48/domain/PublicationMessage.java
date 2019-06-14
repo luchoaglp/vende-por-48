@@ -24,6 +24,8 @@ public class PublicationMessage {
 
     private Boolean liked;
 
+    private Boolean sold;
+
     @JsonIgnore
     @ManyToOne
     private Publication publication;
@@ -35,12 +37,14 @@ public class PublicationMessage {
         this.description = description;
         this.messageDateTime = messageDateTime;
         this.liked = false;
+        this.sold = false;
     }
 
     public PublicationMessage(String description, LocalDateTime messageDateTime, Boolean liked) {
         this.description = description;
         this.messageDateTime = messageDateTime;
         this.liked = liked;
+        this.sold = false;
     }
 
     @Override

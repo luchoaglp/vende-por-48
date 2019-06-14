@@ -26,16 +26,38 @@ $(function() {
             return msg1.liked ? -1 : 1;
         });
         $messages.html('');
-        messages.forEach(message => {
 
-            const dateTime = new Date(message.messageDateTime);
-            const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
-            const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
+        let sold = false;
 
-            $messages.append(
-                $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
-            );
-        });
+        for(message of messages) {
+            if(message.sold) {
+
+                const dateTime = new Date(message.messageDateTime);
+                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+
+                $messages.html(
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
+                );
+                sold = true;
+            }
+        }
+
+        for(message of messages) {
+
+            if(!sold) {
+
+                const dateTime = new Date(message.messageDateTime);
+                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+                const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
+
+                $messages.append(
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
+                );
+
+            } else {
+                break;
+            }
+        }
     }
 
     $.get("/publication/messages/buyer/" + publicationId, function(data) {

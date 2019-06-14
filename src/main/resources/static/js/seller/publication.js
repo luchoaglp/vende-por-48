@@ -27,6 +27,15 @@ $(function() {
         });
     }
 
+    function sellMessage(publicationId, messageId) {
+        $.post('/publication/message/' + publicationId + '/sell/' + messageId, function(message) {
+            console.log("AJAX", message);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            console.error(jqXHR, textStatus, errorThrown);
+        });
+    }
+
     function displayMessages() {
         messages.sort((msg1, msg2) => {
             if(msg1.liked === msg2.liked) {
@@ -35,24 +44,54 @@ $(function() {
             return msg1.liked ? -1 : 1;
         });
         $messages.html('');
-        messages.forEach(message => {
 
-            const dateTime = new Date(message.messageDateTime);
-            const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
-            const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
-            btnLike = !message.liked ? $('<button class="btn btn-outline-success btn-sm">Me Gusta</button>') : undefined;
+        let sold = false;
 
-            $messages.append(
-                $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + ' ' + liked  + '<a href="/publication/message/${publicationId}/sell/${message.id}/" class="btn btn-outline-info btn-sm float-right">Vender</a></li>')
-            );
+        for(message of messages) {
+            if(message.sold) {
 
-            if(btnLike) {
-                $('#li' + message.id).append(btnLike);
-                $(btnLike).bind("click", function() {
-                    likeMessage(publicationId, message.id);
-                });
+                const dateTime = new Date(message.messageDateTime);
+                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+
+                $messages.html(
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
+                );
+                sold = true;
             }
-        });
+        }
+
+        for(message of messages) {
+
+            if(!sold) {
+
+                const dateTime = new Date(message.messageDateTime);
+                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+
+                const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
+                const btnLike = !message.liked ? $('<button class="btn btn-outline-success btn-sm">Me Gusta</button>') : undefined;
+                const btnSell = $('<button class="btn btn-outline-info btn-sm float-right">Vender</button>');
+
+                $messages.append(
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + ' ' + liked + '</li>')
+                );
+
+                if(btnLike) {
+                    $('#li' + message.id).append(btnLike);
+                    $(btnLike).bind("click", function() {
+                        likeMessage(publicationId, message.id);
+                    });
+                }
+
+                $('#li' + message.id).append(btnSell);
+
+                $(btnSell).bind("click", function() {
+                    sellMessage(publicationId, message.id);
+                });
+
+            } else {
+                break;
+            }
+        }
     }
 
     $.get("/publication/messages/seller/" + publicationId, function(data) {

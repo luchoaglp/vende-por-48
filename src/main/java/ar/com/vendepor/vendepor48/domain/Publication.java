@@ -32,11 +32,12 @@ public class Publication {
     @Transient
     private LocalDateTime endDateTime;
 
+    private Boolean sold;
+
     @ManyToOne
     private Client client;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "publication")
-    //@OrderBy("id DESC")
     private List<PublicationMessage> messages = new ArrayList<>();
 
     public Publication addPublicationMessage(PublicationMessage message) {
