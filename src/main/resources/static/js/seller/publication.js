@@ -56,7 +56,12 @@ $(function() {
                 $messages.html(
                     $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
                 );
+
+                console.log('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
+
                 sold = true;
+
+                break;
             }
         }
 
@@ -68,8 +73,8 @@ $(function() {
                 const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
 
                 const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
-                const btnLike = !message.liked ? $('<button class="btn btn-outline-success btn-sm">Me Gusta</button>') : undefined;
-                const btnSell = $('<button class="btn btn-outline-info btn-sm float-right">Vender</button>');
+                const btnLike = !message.liked ? $('<button id="like-' + publicationId + '-' + message.id + '" class="btn btn-outline-success btn-sm">Me Gusta</button>') : undefined;
+                const btnSell = $('<button id="sell-' + publicationId + '-' + message.id + '" class="btn btn-outline-info btn-sm float-right">Vender</button>');
 
                 $messages.append(
                     $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + ' ' + liked + '</li>')
@@ -77,15 +82,15 @@ $(function() {
 
                 if(btnLike) {
                     $('#li' + message.id).append(btnLike);
-                    $(btnLike).bind("click", function() {
-                        likeMessage(publicationId, message.id);
+                    $('#like-' + publicationId + '-' + message.id + '').bind("click", function() {
+                        likeMessage($(this)[0].id.split('-')[1], $(this)[0].id.split('-')[2]);
                     });
                 }
 
                 $('#li' + message.id).append(btnSell);
 
-                $(btnSell).bind("click", function() {
-                    sellMessage(publicationId, message.id);
+                $('#sell-' + publicationId + '-' + message.id + '').bind("click", function() {
+                    sellMessage($(this)[0].id.split('-')[1], $(this)[0].id.split('-')[2]);
                 });
 
             } else {
@@ -96,6 +101,7 @@ $(function() {
 
     $.get("/publication/messages/seller/" + publicationId, function(data) {
         messages = data;
+        console.log(messages);
         displayMessages();
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
