@@ -38,15 +38,22 @@ public class PublicationMessageController {
         List<PublicationMessage> messages = publicationMessageService.findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
 
         if(principal == null) {
-            messages.forEach(message -> message.setDescription(null));
+            messages.forEach(message -> {
+                message.setDescription(null);
+                message.getClient().setEmail(null);
+            });
         } else {
 
             Publication publication = publicationService.findById(publicationId);
 
             UserPrincipal user = (UserPrincipal) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
 
+            // The publication does not belong to the owner
             if (!user.getId().equals(publication.getClient().getId())) {
-                messages.forEach(message -> message.setDescription(null));
+                messages.forEach(message -> {
+                    message.setDescription(null);
+                    message.getClient().setEmail(null);
+                });
             }
         }
 
@@ -61,6 +68,16 @@ public class PublicationMessageController {
 
         if(principal == null) {
             messages.forEach(message -> message.setDescription(null));
+        } else {
+
+            Publication publication = publicationService.findById(publicationId);
+
+            UserPrincipal user = (UserPrincipal) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+
+            // The publication does not belong to the owner
+            if (!user.getId().equals(publication.getClient().getId())) {
+                throw new RestException("No eres el propietario de esta oferta.");
+            }
         }
 
         return ResponseEntity.ok(messages);
@@ -75,9 +92,9 @@ public class PublicationMessageController {
             throw new RestException("Debes ingresar para realizar tu oferta.");
         }
 
-        UserPrincipal user = (UserPrincipal) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-
         Publication publication = publicationService.findById(publicationId);
+
+        UserPrincipal user = (UserPrincipal) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
 
         // The message belongs to the publication owner
         if(user.getId().equals(publication.getClient().getId())) {
@@ -98,7 +115,12 @@ public class PublicationMessageController {
 
     @PostMapping("/publication/message/{publicationId}/like/{messageId}")
     public ResponseEntity<?> messageLiked(@PathVariable("publicationId") Long publicationId,
-                                          @PathVariable("messageId") Long messageId) {
+                                          @PathVariable("messageId") Long messageId,
+                                          Principal principal) {
+
+        if(principal == null) {
+            throw new RestException("Debes ingresar para afirmar que te gusta el mensaje.");
+        }
 
         PublicationMessage message = publicationMessageService.findById(messageId);
 
@@ -120,11 +142,11 @@ public class PublicationMessageController {
                                              @PathVariable("messageId") Long messageId,
                                              Principal principal) {
 
-        Publication publication = publicationService.findById(publicationId);
-
         if(principal == null) {
             throw new RestException("Debes ingresar para vender tu oferta.");
         }
+
+        Publication publication = publicationService.findById(publicationId);
 
         UserPrincipal user = (UserPrincipal) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
 
