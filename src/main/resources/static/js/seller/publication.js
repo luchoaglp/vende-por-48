@@ -48,6 +48,7 @@ $(function() {
         let sold = false;
 
         for(message of messages) {
+
             if(message.sold) {
 
                 const dateTime = new Date(message.messageDateTime);
@@ -57,17 +58,15 @@ $(function() {
                     $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
                 );
 
-                console.log('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
-
                 sold = true;
 
                 break;
             }
         }
 
-        for(message of messages) {
+        if(!sold) {
 
-            if(!sold) {
+            for(message of messages) {
 
                 const dateTime = new Date(message.messageDateTime);
                 const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
@@ -92,16 +91,13 @@ $(function() {
                 $('#sell-' + publicationId + '-' + message.id + '').bind("click", function() {
                     sellMessage($(this)[0].id.split('-')[1], $(this)[0].id.split('-')[2]);
                 });
-
-            } else {
-                break;
             }
         }
     }
 
     $.get("/publication/messages/seller/" + publicationId, function(data) {
         messages = data;
-        console.log(messages);
+        console.log("WS", messages);
         displayMessages();
     })
     .fail(function(jqXHR, textStatus, errorThrown) {

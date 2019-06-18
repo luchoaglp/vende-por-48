@@ -32,17 +32,36 @@ public class PublicationMessageController {
     }
 
     @GetMapping("/publication/messages/buyer/{publicationId}")
-    public ResponseEntity<?> getBuyerPublicationMessages(@PathVariable("publicationId") Long publicationId) {
+    public ResponseEntity<?> getBuyerPublicationMessages(@PathVariable("publicationId") Long publicationId,
+                                                         Principal principal) {
 
         List<PublicationMessage> messages = publicationMessageService.findTop5ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
+
+        if(principal == null) {
+            messages.forEach(message -> message.setDescription(null));
+        } else {
+
+            Publication publication = publicationService.findById(publicationId);
+
+            UserPrincipal user = (UserPrincipal) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+
+            if (!user.getId().equals(publication.getClient().getId())) {
+                messages.forEach(message -> message.setDescription(null));
+            }
+        }
 
         return ResponseEntity.ok(messages);
     }
 
     @GetMapping("/publication/messages/seller/{publicationId}")
-    public ResponseEntity<?> getSellerPublicationMessages(@PathVariable("publicationId") Long publicationId) {
+    public ResponseEntity<?> getSellerPublicationMessages(@PathVariable("publicationId") Long publicationId,
+                                                          Principal principal) {
 
         List<PublicationMessage> messages = publicationMessageService.findTop10ByPublicationIdOrderByLikedDescMessageDateTimeDesc(publicationId);
+
+        if(principal == null) {
+            messages.forEach(message -> message.setDescription(null));
+        }
 
         return ResponseEntity.ok(messages);
     }
@@ -98,11 +117,20 @@ public class PublicationMessageController {
 
     @PostMapping("/publication/message/{publicationId}/sell/{messageId}")
     public ResponseEntity<?> soldPublication(@PathVariable("publicationId") Long publicationId,
-                                  @PathVariable("messageId") Long messageId) {
-
-        System.out.println("P_ID: " + publicationId + ", M_ID: " + messageId);
+                                             @PathVariable("messageId") Long messageId,
+                                             Principal principal) {
 
         Publication publication = publicationService.findById(publicationId);
+
+        if(principal == null) {
+            throw new RestException("Debes ingresar para vender tu oferta.");
+        }
+
+        UserPrincipal user = (UserPrincipal) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+
+        if(!user.getId().equals(publication.getClient().getId())) {
+            throw new RestException("No podés vender una oferta que no sea de tu propiedad.");
+        }
 
         publication.setSold(true);
 
@@ -118,30 +146,8 @@ public class PublicationMessageController {
 
         publicationService.save(publication);
 
-        /*
-        UserPrincipal user = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Client client = clientService.getById(user.getId());
-
-        // Update
-        if(publication.getId() != null) {
-
-            // The publication does not belong to the client
-            if(!publicationService.findById(publication.getId())
-                    .getClient().getId().equals(client.getId())) {
-                throw new MvcException("No se puede vender");
-            }
-        }
-
-        publication.setClient(client);
-
-        publication = publicationService.save(publication);
-
-        */
-
         simpMessagingTemplate.convertAndSend("/queue/reply", message);
 
-        //return "redirect:/publication/detail/" + publicationId;
         return ResponseEntity.ok(message);
     }
 

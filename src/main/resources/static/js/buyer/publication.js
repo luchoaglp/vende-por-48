@@ -36,15 +36,15 @@ $(function() {
                 const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
 
                 $messages.html(
-                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a> <span class="text-success"> Vendido </span></li>')
                 );
                 sold = true;
             }
         }
 
-        for(message of messages) {
+        if(!sold) {
 
-            if(!sold) {
+            for(message of messages) {
 
                 const dateTime = new Date(message.messageDateTime);
                 const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
@@ -53,15 +53,13 @@ $(function() {
                 $messages.append(
                     $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
                 );
-
-            } else {
-                break;
             }
         }
     }
 
     $.get("/publication/messages/buyer/" + publicationId, function(data) {
         messages = data;
+        console.log("WS", messages);
         displayMessages();
 
     }).fail(function() {
