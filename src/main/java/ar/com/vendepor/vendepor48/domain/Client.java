@@ -17,20 +17,18 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
-@Builder
 @Table(name = "clients")
 public class Client extends User {
 
     @JsonProperty("first_name")
     @NotBlank(message = "{firstName.notblank}")
     @Size(min = 2, max = 50, message =  "{firstName.size}")
-    private String firstName;
+    protected String firstName;
 
     @JsonProperty("last_name")
     @NotBlank(message = "{lastName.notblank}")
     @Size(min = 2, max = 50, message =  "{lastName.size}")
-    private String lastName;
+    protected String lastName;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")

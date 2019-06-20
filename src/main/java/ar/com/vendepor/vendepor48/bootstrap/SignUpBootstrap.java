@@ -1,8 +1,6 @@
 package ar.com.vendepor.vendepor48.bootstrap;
 
-import ar.com.vendepor.vendepor48.domain.Client;
-import ar.com.vendepor.vendepor48.domain.Publication;
-import ar.com.vendepor.vendepor48.domain.PublicationMessage;
+import ar.com.vendepor.vendepor48.domain.*;
 import ar.com.vendepor.vendepor48.domain.security.SignUpClient;
 import ar.com.vendepor.vendepor48.domain.security.SignUpToken;
 import ar.com.vendepor.vendepor48.service.ClientService;

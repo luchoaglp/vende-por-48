@@ -40,7 +40,7 @@ public class PublicationMessageController {
         if(principal == null) {
             messages.forEach(message -> {
                 message.setDescription(null);
-                message.getClient().setEmail(null);
+                message.getClient().setEmail("secret@email.com");
             });
         } else {
 
@@ -52,7 +52,7 @@ public class PublicationMessageController {
             if (!user.getId().equals(publication.getClient().getId())) {
                 messages.forEach(message -> {
                     message.setDescription(null);
-                    message.getClient().setEmail(null);
+                    message.getClient().setEmail("secret@email.com");
                 });
             }
         }

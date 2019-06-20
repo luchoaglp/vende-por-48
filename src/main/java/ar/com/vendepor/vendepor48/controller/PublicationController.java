@@ -2,7 +2,6 @@ package ar.com.vendepor.vendepor48.controller;
 
 import ar.com.vendepor.vendepor48.domain.Client;
 import ar.com.vendepor.vendepor48.domain.Publication;
-import ar.com.vendepor.vendepor48.domain.PublicationMessage;
 import ar.com.vendepor.vendepor48.exception.MvcException;
 import ar.com.vendepor.vendepor48.security.UserPrincipal;
 import ar.com.vendepor.vendepor48.service.ClientService;

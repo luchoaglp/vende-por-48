@@ -2,7 +2,6 @@ package ar.com.vendepor.vendepor48.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class PublicationMessage {
 
@@ -32,6 +30,8 @@ public class PublicationMessage {
 
     @OneToOne(fetch = FetchType.EAGER)
     private Client client;
+
+    public PublicationMessage() { }
 
     public PublicationMessage(String description, LocalDateTime messageDateTime) {
         this.description = description;

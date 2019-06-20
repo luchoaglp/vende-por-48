@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @MappedSuperclass
 public abstract class User {
 
@@ -54,6 +53,8 @@ public abstract class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT-03:00")
     @LastModifiedDate
     protected LocalDateTime lastModifiedDate;
+
+    public User() { }
 
     public User(String email, String password) {
         this.email = email;
