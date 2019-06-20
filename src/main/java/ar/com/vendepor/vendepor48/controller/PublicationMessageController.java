@@ -105,10 +105,13 @@ public class PublicationMessageController {
         message.setClient(clientService.getById(user.getId()));
         message.setMessageDateTime(LocalDateTime.now());
         message.setLiked(false);
+        message.setSold(false);
 
         publicationMessageService.save(message);
 
-        simpMessagingTemplate.convertAndSend("/queue/reply", message);
+        simpMessagingTemplate.convertAndSend("/queue/seller", message);
+        message.setDescription(null);
+        simpMessagingTemplate.convertAndSend("/queue/buyer", message);
 
         return ResponseEntity.ok(message);
     }
@@ -132,7 +135,9 @@ public class PublicationMessageController {
 
         publicationMessageService.save(message);
 
-        simpMessagingTemplate.convertAndSend("/queue/reply", message);
+        simpMessagingTemplate.convertAndSend("/queue/seller", message);
+        message.setDescription(null);
+        simpMessagingTemplate.convertAndSend("/queue/buyer", message);
 
         return ResponseEntity.ok(message);
     }
@@ -168,7 +173,9 @@ public class PublicationMessageController {
 
         publicationService.save(publication);
 
-        simpMessagingTemplate.convertAndSend("/queue/reply", message);
+        simpMessagingTemplate.convertAndSend("/queue/seller", message);
+        message.setDescription(null);
+        simpMessagingTemplate.convertAndSend("/queue/buyer", message);
 
         return ResponseEntity.ok(message);
     }

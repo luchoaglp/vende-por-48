@@ -2,8 +2,11 @@ $(function() {
 
     const $messages = $('#messages');
     const $err = $('#err');
+    const $msg = $('#msg');
     let messages = [];
     let stompClient = null;
+
+    $msg.focus();
 
     const publication = window.location.pathname.split("/");
     const publicationId = publication[publication.length - 1];
@@ -59,7 +62,7 @@ $(function() {
 
     $.get("/publication/messages/buyer/" + publicationId, function(data) {
         messages = data;
-        console.log("WS", messages);
+        console.log("GET", messages);
         displayMessages();
 
     }).fail(function() {
@@ -71,7 +74,7 @@ $(function() {
         const stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/queue/reply', function (msg) {
+            stompClient.subscribe('/queue/buyer', function (msg) {
                 const message = JSON.parse(msg.body);
                 replaceMessage(message);
                 displayMessages();
@@ -88,12 +91,15 @@ $(function() {
             url: `/publication/message/${publicationId}`,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
-            data: JSON.stringify({ description: $.trim($('#msg').val()) })
+            data: JSON.stringify({ description: $.trim($msg.val()) })
         })
         .done(function(message) {
+            $msg.val('');
+            $msg.focus();
             console.log("AJAX", message);
         })
         .fail(function(jqXHR, textStatus) {
+            $msg.val('');
             console.error(jqXHR, textStatus);
             $err.text(jqXHR.responseJSON.message);
         });

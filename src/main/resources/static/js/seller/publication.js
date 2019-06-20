@@ -97,7 +97,7 @@ $(function() {
 
     $.get("/publication/messages/seller/" + publicationId, function(data) {
         messages = data;
-        console.log("WS", messages);
+        console.log("GET", messages);
         displayMessages();
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
@@ -109,7 +109,7 @@ $(function() {
         const stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/queue/reply', function (msg) {
+            stompClient.subscribe('/queue/seller', function (msg) {
                 const message = JSON.parse(msg.body);
                 replaceMessage(message);
                 displayMessages();
