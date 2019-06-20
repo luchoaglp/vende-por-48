@@ -3,6 +3,7 @@ $(function() {
     const $messages = $('#messages');
     const $err = $('#err');
     const $msg = $('#msg');
+    const $send = $('#send');
     let messages = [];
     let stompClient = null;
 
@@ -35,11 +36,10 @@ $(function() {
         for(message of messages) {
             if(message.sold) {
 
-                const dateTime = new Date(message.messageDateTime);
-                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+                const dateTime = moment(new Date(message.messageDateTime)).format("YYYY-MM-DD HH:mm:ss");
 
                 $messages.html(
-                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a> <span class="text-success"> Vendido </span></li>')
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTime + '</b>] <a href="#">' + message.client.username + '</a> <span class="text-success"> Vendido </span></li>')
                 );
                 sold = true;
             }
@@ -49,12 +49,11 @@ $(function() {
 
             for(message of messages) {
 
-                const dateTime = new Date(message.messageDateTime);
-                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+                const dateTime = moment(new Date(message.messageDateTime)).format("YYYY-MM-DD HH:mm:ss");
                 const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
 
                 $messages.append(
-                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTime + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
                 );
             }
         }
@@ -85,7 +84,7 @@ $(function() {
 
     connect();
 
-    $('#send').click(() => {
+    $send.click(() => {
         $.ajax({
             method: "POST",
             url: `/publication/message/${publicationId}`,

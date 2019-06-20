@@ -51,11 +51,10 @@ $(function() {
 
             if(message.sold) {
 
-                const dateTime = new Date(message.messageDateTime);
-                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
+                const dateTime = moment(new Date(message.messageDateTime)).format("YYYY-MM-DD HH:mm:ss");
 
                 $messages.html(
-                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTime + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + '<span class="text-success"> Vendido </span></li>')
                 );
 
                 sold = true;
@@ -68,15 +67,13 @@ $(function() {
 
             for(message of messages) {
 
-                const dateTime = new Date(message.messageDateTime);
-                const dateTimeStr = `${dateTime.getFullYear()}/${dateTime.getMonth() + 1}/${dateTime.getDate()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
-
+                const dateTime = moment(new Date(message.messageDateTime)).format("YYYY-MM-DD HH:mm:ss");
                 const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
                 const btnLike = !message.liked ? $('<button id="like-' + publicationId + '-' + message.id + '" class="btn btn-outline-success btn-sm">Me Gusta</button>') : undefined;
                 const btnSell = $('<button id="sell-' + publicationId + '-' + message.id + '" class="btn btn-outline-info btn-sm float-right">Vender</button>');
 
                 $messages.append(
-                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTimeStr + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + ' ' + liked + '</li>')
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTime + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + ' ' + liked + '</li>')
                 );
 
                 if(btnLike) {
