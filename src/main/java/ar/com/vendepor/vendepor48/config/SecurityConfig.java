@@ -25,7 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/publication/img/**",
             "/publication/messages/**",
             "/publication/message/**", // DEV
-            "/ws/**", // DEV
+            "/ws/**", 
+            "/client/info/**",
             "/h2-console/**" // DEV
     };
 

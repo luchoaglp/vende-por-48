@@ -53,7 +53,7 @@ $(function() {
                 const liked = message.liked ? '<span class="text-success font-weight-bold">✓</span>' : '';
 
                 $messages.append(
-                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTime + '</b>] <a href="#">' + message.client.username + '</a>' + liked)
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTime + '</b>] <a href="/client/info/' + message.client.id + '">' + message.client.username + '</a>' + liked)
                 );
             }
         }

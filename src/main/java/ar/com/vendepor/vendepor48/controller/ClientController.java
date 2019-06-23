@@ -171,6 +171,15 @@ public class ClientController {
         return "signin";
     }
 
+    @GetMapping("/client/info/{id}")
+    public String info(@PathVariable("id") Long id,
+                       Model model) {
+
+        model.addAttribute("client", clientService.getById(id));
+
+        return "client/info";
+    }
+
     private void validateToken(SignUpToken signUpToken) {
         if(signUpToken == null) {
             throw new MvcException("Token inválido");

@@ -73,7 +73,7 @@ $(function() {
                 const btnSell = $('<button id="sell-' + publicationId + '-' + message.id + '" class="btn btn-outline-info btn-sm float-right">Vender</button>');
 
                 $messages.append(
-                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTime + '</b>] <a href="#">' + message.client.username + '</a>: ' + message.description + ' ' + liked + '</li>')
+                    $('<li id="li' + message.id + '" class="list-group-item">[<b>' + dateTime + '</b>] <a href="/client/info/' + message.client.id + '">' + message.client.username + '</a>: ' + message.description + ' ' + liked + '</li>')
                 );
 
                 if(btnLike) {
