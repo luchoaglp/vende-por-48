@@ -2,6 +2,69 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<!-- Navbar -->
+<nav th:fragment="navbar" class="navbar sticky-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container" >
+
+        <!-- Brand -->
+        <a class="navbar-brand" data-scroll th:href="@{/}">
+            <img class="rounded-circle animated pulse delay-1s" th:src="@{/img/Logo.png}" width="80" height="80" alt="">
+        </a>
+
+        <!-- Collapse -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbar-main">
+
+            <!-- Left -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link waves-effect" data-scroll href="#trabajos">SUSCRIBIRME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect" data-scroll href="#oficinas">COMPRAR</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect" data-scroll href="#contacto">VENDER</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+            <li class="nav-item wow animated fadeInDown">
+                <a href="https://www.facebook.com/" class="btn-floating btn-sm btn-email" type="button" role="button" target="_blank" style="background: rgba(206,36,113,1);
+                    background: -moz-linear-gradient(left, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(206,36,113,1)), color-stop(31%, rgba(222,90,78,1)), color-stop(99%, rgba(241,155,34,1)), color-stop(100%, rgba(241,155,34,1)));
+                    background: -webkit-linear-gradient(left, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    background: -o-linear-gradient(left, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    background: -ms-linear-gradient(left, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    background: linear-gradient(to right, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ce2471', endColorstr='#f19b22', GradientType=1 );}">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+            <li class="nav-item wow animated slideInDown">
+                <a href="https://instagram.com/" class="btn-floating btn-sm btn-email" type="button" role="button" target="_blank" style="background: rgba(206,36,113,1);
+                    background: -moz-linear-gradient(left, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(206,36,113,1)), color-stop(31%, rgba(222,90,78,1)), color-stop(99%, rgba(241,155,34,1)), color-stop(100%, rgba(241,155,34,1)));
+                    background: -webkit-linear-gradient(left, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    background: -o-linear-gradient(left, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    background: -ms-linear-gradient(left, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    background: linear-gradient(to right, rgba(206,36,113,1) 0%, rgba(222,90,78,1) 31%, rgba(241,155,34,1) 99%, rgba(241,155,34,1) 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ce2471', endColorstr='#f19b22', GradientType=1 );
+                    }">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!--
 <nav th:fragment="navbar" class="navbar navbar-expand-lg p-3 px-md-4 mb-5 navbar-dark bg-primary border-bottom shadow-sm">
     <h5><a class="navbar-brand" th:href="@{/}">Vende por 48</a></h5>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,3 +93,4 @@
         </ul>
     </div>
 </nav>
+-->
