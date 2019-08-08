@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = {
-            "/css/**", "/js/**", "/img/**", "/",
+            "/css/**", "/js/**", "/img/**", "/font/**", "/",
             "/", "/signin", "/signup", "/register/**",
             "/publication/detail/**",
             "/publication/img/**",
