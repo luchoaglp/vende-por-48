@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="common-header">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" th:href="@{/img/favicon.ico}">
-    <title>Vende por 48</title>
+    <title>Compra en 48</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/mdb.min.css}" rel="stylesheet"/>
@@ -60,66 +57,70 @@
             </a>
         </div>
     </div>
-</div>
 
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide" >
-            <div class="card">
-                <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/vehiculos.jpg" alt="...">
-                <div class="card-body"></div>
-            </div>
-        </div>
-        <div class="swiper-slide" >
-            <div class="card">
-                <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/super.jpg" alt="...">
-                <div class="card-body"></div>
-            </div>
-        </div>
-        <div class="swiper-slide" >
-            <div class="card">
-                <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/repuestos.jpg" alt="...">
-                <div class="card-body"></div>
-            </div>
-        </div>
-        <div class="swiper-slide" >
-            <div class="card">
-                <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/ropa.jpg" alt="...">
-                <div class="card-body"></div>
-            </div>
-        </div>
-        <div class="swiper-slide" >
-            <div class="card">
-                <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/viajes.jpg" alt="...">
-                <div class="card-body"></div>
-            </div>
-        </div>
-        <div class="swiper-slide" >
-            <div class="card">
-                <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/hogarymueblesjpg.jpg" alt="...">
-                <div class="card-body"></div>
-            </div>
-        </div>
-        <div class="swiper-slide" >
-            <div class="card">
-                <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/comidas.jpg" alt="...">
-                <div class="card-body">
+</div>
+<hr>
+<div class="container">
+
+    <section class="my-5">
+        <!-- Section description -->
+        <p class="text-center dark-grey-text w-responsive mx-auto mb-5 animated fadeInUp slower">suscripcion a descuentos que terminan en 48 horas</p>
+        <section class="my-5">
+            <!-- Section heading -->
+            <h2 class="h1-responsive font-weight-bold text-center my-5 "><strong style="color:#F93100;">QUE PUEDO COMPRAR</strong></h2>
+            <!-- Section description -->
+        </section>
+    </section>
+
+    <div class="swiper-container mb-3">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" >
+                <div class="card">
+                    <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/vehiculos.jpg" alt="...">
+
                 </div>
             </div>
-        </div>
-        <div class="swiper-slide" >
-            <div class="card">
-                <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/electro.jpg" alt="...">
-                <div class="card-body"></div>
+            <div class="swiper-slide" >
+                <div class="card">
+                    <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/super.jpg" alt="...">
+                </div>
             </div>
+            <div class="swiper-slide" >
+                <div class="card">
+                    <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/repuestos.jpg" alt="...">
+                </div>
+            </div>
+            <div class="swiper-slide" >
+                <div class="card">
+                    <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/ropa.jpg" alt="...">
+                </div>
+            </div>
+            <div class="swiper-slide" >
+                <div class="card">
+                    <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/viajes.jpg" alt="...">
+                </div>
+            </div>
+            <div class="swiper-slide" >
+                <div class="card">
+                    <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/hogarymueblesjpg.jpg" alt="...">
+                </div>
+            </div>
+            <div class="swiper-slide" >
+                <div class="card">
+                    <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/comidas.jpg" alt="...">
+                </div>
+            </div>
+            <div class="swiper-slide" >
+                <div class="card">
+                    <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/electro.jpg" alt="...">
+                </div>
+            </div>
+
         </div>
-
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
     </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
-</div>
 
-<div class="container">
     <div class="row">
         <div th:each="publication : ${publications}" class="col-4">
             <!--/*@thymesVar id="publication" type="ar.com.vendepor.vendepor48.domain.Publication"*/-->
@@ -133,7 +134,7 @@
                     <p>Empieza: <span th:text="${#temporals.format(publication.startDateTime, 'yyyy/MM/dd HH:mm')}"></span><br>
                        Termina: <span th:text="${#temporals.format(publication.endDateTime, 'yyyy/MM/dd HH:mm')}"></span></p>
                     <hr>
-                    <a th:href="@{${'/publication/detail/' + publication.id}}" class="btn btn-lg btn-block btn-primary">Ver</a>
+                    <a th:href="@{${'/publication/detail/' + publication.id}}" class="btn btn-lg btn-block btn-deep-orange">Ver</a>
                 </div>
             </div>
         </div>
