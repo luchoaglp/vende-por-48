@@ -77,7 +77,6 @@
             <div class="swiper-slide" >
                 <div class="card">
                     <img class="card-img-top" src="https://vendeen48.000webhostapp.com/img/ofertas/vehiculos.jpg" alt="...">
-
                 </div>
             </div>
             <div class="swiper-slide" >
@@ -121,9 +120,20 @@
         <div class="swiper-pagination"></div>
     </div>
 
+    <div class="row mb-4">
+        <figure th:each="publication : ${publications}" class="col-md-4">
+            <!--/*@thymesVar id="publication" type="ar.com.vendepor.vendepor48.domain.Publication"*/-->
+            <a th:href="@{${'/publication/detail/' + publication.id}}">
+                <img th:src="@{${'/publication/img/' + publication.id}}" alt="..." class="img-fluid">
+            </a>
+        </figure>
+    </div>
+
+    <!--
     <div class="row">
         <div th:each="publication : ${publications}" class="col-4">
             <!--/*@thymesVar id="publication" type="ar.com.vendepor.vendepor48.domain.Publication"*/-->
+            <!--
             <div class="card shadow-sm mb-3">
                 <img th:src="@{${'/publication/img/' + publication.id}}" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -139,7 +149,8 @@
             </div>
         </div>
     </div>
-</div>
+    -->
+    </div>
 
 <footer th:replace="common/footer :: footer"/>
 
@@ -147,27 +158,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
 
 <script>
-var swiper = new Swiper('.swiper-container', {
-    autoplay:true,
-    autoplay: {
-        delay: 9000,
-    },
-    initialSlide:1,
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: 'auto',
-    coverflowEffect: {
-        rotate: 50,
-        stretch: 0,
-        depth: 200,
-        modifier: 1,
-        slideShadows : false,
-    },
-    pagination: {
-        el: '.swiper-pagination',
-    }
+$(function () {
+
+    const swiper = new Swiper('.swiper-container', {
+        autoplay:true,
+        autoplay: {
+            delay: 9000,
+        },
+        initialSlide:1,
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 200,
+            modifier: 1,
+            slideShadows : false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+        }
+    });
 });
+
 </script>
 
 </body>

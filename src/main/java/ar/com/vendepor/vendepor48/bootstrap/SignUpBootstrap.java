@@ -120,33 +120,30 @@ public class SignUpBootstrap implements ApplicationListener<ContextRefreshedEven
 
         Publication publication = new Publication();
 
-        publication.setTitle("Notebook Lenovo Celeron N4000 4gb 500gb Windows 10 81d0000r");
-        publication.setDescription("LENOVO\n" +
+        publication.setTitle("Cena con entrada para compartir + platos de fondo + postres + copa de vino para 2 personas");
+        publication.setDescription("Entrada para compartir \n" +
                 "\n" +
-                "Notebook Lenovo Ideapad Intel Celeron 4gb 500gb Windows 10 !\n" +
+                "Buñuelos Galpón \n" +
+                "Buñuelos de espinaca y corazón de gruyere con alioli de azafrán \n" +
+                "Won ton: típicas empanadillas asiáticas de pollo orgánico, sésamo tostado y verdeo con salsa teriyaki \n" +
+                "Platos por persona \n" +
                 "\n" +
-                "NOTEBOOK 14\" LENOVO IDEAPAD 330-14IGM WINDOWS 10 HOME\n" +
-                "Intel Celeron N4000 / 4GB RAM / 500GB Almacenamiento\n" +
-                "81D0000RAR\n" +
+                "Shepherd´s Pie: plato tradicional británico a base de carne de cordero, vegetales y topping de puré de papa\n" +
+                "Ragout de ternera, osobuco y hongos: estofado de carnes, osobuco, vegetales y hongos con crema agria \n" +
+                "Cerdo desmechado: carne de cerdo horneada en fondo de cocción con batatas, berenjenas y chutney de estación \n" +
+                "Pollo tikka masala: preparación de origen Indo-Pakistani de pollo macerado en yogurth, especias orientales con arroz blanco y pan naan de ajo \n" +
+                "Abadejo al horno: lomo de abadejo al horno con cascara de cítricos y salsa thai tibia\n" +
+                "Lasagna de vegetales: lasagna abierta de vegetales sarteneados, salsa filetto y manteca de limón \n" +
+                "Pappardelle rigate: pasta tricolor con salsa de: pesto, filetto o zuchinnis asados \n" +
+                "Postres por persona:\n" +
                 "\n" +
-                "Optimiza tu día.\n" +
-                "\n" +
-                "• DISEÑADO PARA ESTAR AL DÍA CONTIGO\n" +
-                "Diseñado con un acabado protector final que lo protege del desgaste, y con detalles de goma en la parte inferior de la cubierta para maximizar la ventilación y prolongar la vida útil de los componentes.\n" +
-                "\n" +
-                "• ACELERA TU PRODUCTIVIDAD AHORA Y MAÑANA\n" +
-                "Los innovadores procesadores Intel® Core™ y memoria RAM DDR4 aseguran la realización de tareas múltiples sin problemas, arranques rápidos y entretenimiento tipo cine en casa.\n" +
-                "\n" +
-                "• RAPID CHARGE, EN CUALQUIER MOMENTO\n" +
-                "¿Se agota la batería y no tienes mucho tiempo? Cuenta con hasta 6 horas de autonomía y es compatible con el sistema Rapid Charge: 15 minutos de carga para 2 horas de uso.\n" +
-                "\n" +
-                "• WINDOWS 10 MEJORA CADA DÍA\n" +
-                "Combina lo mejor con Windows 10. Compartir es más rápido que nunca, con ajustes intuitivos que facilitan la conexión instantánea con las personas que más te importan.\n" +
-                "\n" +
-                "• SONIDO CÁLIDO Y CLARIDAD REAL\n" +
-                "Con una resolución HD, ofrece efectos visuales potentes mientras te desplazas. Combinado con Dolby Audio, brinda una experiencia de entretenimiento radicalmente mejorada.");
+                "Volean de chocolate con almendras y ralladura de cítricos \n" +
+                "Mousse de queso, espuma de vino y reducción ácida \n" +
+                "Meregue tibio de crema y frutos rojos \n" +
+                "Crumble de manzana ,frutas asadas y helado de limón \n" +
+                "Copa de vino por persona ");
 
-        publication.setAmount(18258.9);
+        publication.setAmount(899d);
         publication.setStartDateTime(LocalDateTime.now().plusHours(1));
         publication.setSold(false);
 

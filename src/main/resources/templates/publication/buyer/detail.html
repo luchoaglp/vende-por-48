@@ -11,7 +11,7 @@
 
 <div class="container">
 
-    <div class="card shadow-sm mb-3">
+    <div class="card shadow-sm mb-3 mt-3">
         <div class="card-body">
             <div class="row">
                 <div class="col-4">
@@ -34,23 +34,24 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-8">
-                    <div class="form-group">
+                    <div class="md-form mt-3">
                         <input type="text" class="form-control" id="msg" placeholder="Ingresá tu Mensaje" required>
+                        <label for="msg" class="text-left">Mensaje</label>
                         <div class="invalid-feedback d-block" id="err"></div>
                     </div>
                 </div>
                 <div class="col-4">
-                    <button type="button" id="send" class="btn btn-outline-primary">Enviar</button>
+                    <button type="button" id="send" class="btn btn-deep-orange">Enviar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <ul class="list-group shadow-sm" id="messages"></ul>
-
-    <footer th:replace="common/footer :: footer"/>
+    <ul class="list-group shadow-sm mb-4" id="messages"></ul>
 
 </div>
+
+<footer th:replace="common/footer :: footer"/>
 
 <div th:replace="common/bottom :: body-bottom-scripts"/>
 
